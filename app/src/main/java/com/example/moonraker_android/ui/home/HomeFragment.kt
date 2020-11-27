@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.preference.PreferenceManager
 import com.example.moonraker_android.R
 
 class HomeFragment : Fragment() {
@@ -19,13 +20,19 @@ class HomeFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         val textView: TextView = root.findViewById(R.id.text_home)
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+        //homeViewModel.text.observe(viewLifecycleOwner, Observer {
+        //    textView.text = it
+        //})
+
+        textView.text = "Current Moonraker location is ${prefs.getString("moonraker_ip", "undefined")}:${prefs.getString("moonraker_port", "undefined")}"
+
         return root
+
     }
 }
