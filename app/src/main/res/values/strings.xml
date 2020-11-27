@@ -15,4 +15,5 @@
     <string name="settings_port_title">Port</string>
     <string name="settings_ip_summary">The IP for Moonraker API</string>
     <string name="settings_ip_title">IP-Address</string>
+    <string name="prefs_test_string">Current moonraker location is %1$s:%2$s</string>
 </resources>

@@ -30,7 +30,7 @@ class HomeFragment : Fragment() {
         //    textView.text = it
         //})
 
-        textView.text = "Current Moonraker location is ${prefs.getString("moonraker_ip", "undefined")}:${prefs.getString("moonraker_port", "undefined")}"
+        textView.text = getString(R.string.prefs_test_string, prefs.getString("moonraker_ip", "undefined"), prefs.getString("moonraker_port", "undefined"))
 
         return root
 
