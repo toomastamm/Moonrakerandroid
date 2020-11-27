@@ -13,6 +13,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.preference.PreferenceManager
 import com.example.moonraker_android.ui.settings.SettingsActivity
 
 class MainActivity : AppCompatActivity() {
@@ -34,6 +35,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        // Set default settings values
+        PreferenceManager.setDefaultValues(this,
+                R.xml.preferences, false);
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
