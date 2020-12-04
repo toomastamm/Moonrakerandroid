@@ -12,14 +12,26 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.moonraker_android.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_temperatures"
+        android:name="com.example.moonraker_android.ui.temperatures.TemperaturesFragment"
+        android:label="@string/menu_temperatures"
+        tools:layout="@layout/fragment_temperatures" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.moonraker_android.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_motors"
+        android:name="com.example.moonraker_android.ui.motors.MotorsFragment"
+        android:label="@string/menu_motors"
+        tools:layout="@layout/fragment_motors" />
+
+    <fragment
+        android:id="@+id/nav_print_status"
+        android:name="com.example.moonraker_android.ui.print_status.PrintStatusFragment"
+        android:label="@string/menu_print_status"
+        tools:layout="@layout/fragment_print_status" />
+
+    <fragment
+        android:id="@+id/nav_sd_card"
+        android:name="com.example.moonraker_android.ui.sd_card.SDCardFragment"
+        android:label="@string/menu_sd_card"
+        tools:layout="@layout/fragment_sd_card" />
 </navigation>

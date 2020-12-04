@@ -2,14 +2,16 @@
     <string name="app_name">Moonraker-android</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">Views</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_temperatures">Temperatures</string>
+    <string name="menu_motors">Motors</string>
+    <string name="menu_print_status">Print status</string>
+    <string name="menu_sd_card">SD card</string>
+
     <string name="settings_title">Settings</string>
     <string name="settings_port_summary">The port for Moonraker API</string>
     <string name="settings_port_title">Port</string>

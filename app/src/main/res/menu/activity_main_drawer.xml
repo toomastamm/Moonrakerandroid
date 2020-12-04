@@ -9,12 +9,20 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
+            android:id="@+id/nav_temperatures"
+            android:icon="@drawable/ic_menu_temperatures"
+            android:title="@string/menu_temperatures" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
+            android:id="@+id/nav_motors"
+            android:icon="@drawable/ic_menu_motors"
+            android:title="@string/menu_motors" />
+        <item
+            android:id="@+id/nav_print_status"
+            android:icon="@drawable/ic_menu_print_status"
+            android:title="@string/menu_print_status" />
+        <item
+            android:id="@+id/nav_sd_card"
+            android:icon="@drawable/ic_menu_sd_card"
+            android:title="@string/menu_sd_card" />
     </group>
 </menu>

@@ -1,13 +1,13 @@
-package com.example.moonraker_android.ui.slideshow
+package com.example.moonraker_android.ui.motors
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class SlideshowViewModel : ViewModel() {
+class MotorsViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is slideshow Fragment"
+        value = "This is motors Fragment"
     }
     val text: LiveData<String> = _text
 }
