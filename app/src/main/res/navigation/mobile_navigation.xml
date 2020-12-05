@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_print_status">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.example.moonraker_android.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/nav_print_status"
+        android:name="com.example.moonraker_android.ui.print_status.PrintStatusFragment"
+        android:label="@string/menu_print_status"
+        tools:layout="@layout/fragment_print_status" />
 
     <fragment
         android:id="@+id/nav_temperatures"
@@ -22,12 +22,6 @@
         android:name="com.example.moonraker_android.ui.motors.MotorsFragment"
         android:label="@string/menu_motors"
         tools:layout="@layout/fragment_motors" />
-
-    <fragment
-        android:id="@+id/nav_print_status"
-        android:name="com.example.moonraker_android.ui.print_status.PrintStatusFragment"
-        android:label="@string/menu_print_status"
-        tools:layout="@layout/fragment_print_status" />
 
     <fragment
         android:id="@+id/nav_sd_card"

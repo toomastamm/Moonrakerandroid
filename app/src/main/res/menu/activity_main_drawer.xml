@@ -5,9 +5,9 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_home"
-            android:title="@string/menu_home" />
+            android:id="@+id/nav_print_status"
+            android:icon="@drawable/ic_menu_print_status"
+            android:title="@string/menu_print_status" />
         <item
             android:id="@+id/nav_temperatures"
             android:icon="@drawable/ic_menu_temperatures"
@@ -16,10 +16,6 @@
             android:id="@+id/nav_motors"
             android:icon="@drawable/ic_menu_motors"
             android:title="@string/menu_motors" />
-        <item
-            android:id="@+id/nav_print_status"
-            android:icon="@drawable/ic_menu_print_status"
-            android:title="@string/menu_print_status" />
         <item
             android:id="@+id/nav_sd_card"
             android:icon="@drawable/ic_menu_sd_card"
