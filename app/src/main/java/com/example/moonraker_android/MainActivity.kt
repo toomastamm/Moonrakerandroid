@@ -30,8 +30,6 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
 
     private val requestSettings = 100
-    var connectionJob: Job? = null
-
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,14 +43,16 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.nav_print_status,
-            R.id.nav_temperatures,
-            R.id.nav_motors,
-            R.id.nav_sd_card), drawerLayout)
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.nav_print_status,
+                R.id.nav_temperatures,
+                R.id.nav_motors,
+                R.id.nav_sd_card
+            ), drawerLayout
+        )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
         // Set up preferences
         var prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
