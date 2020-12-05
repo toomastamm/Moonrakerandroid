@@ -25,12 +25,28 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import org.json.JSONArray
+import org.json.JSONObject
 
 
 class MainActivity : AppCompatActivity() {
 
     private val requestSettings = 100
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private var moonrakerUrl = ""
+
+    // Printer objects
+
+    // https://github.com/Arksine/moonraker/blob/master/docs/printer_objects.md#heater_bed
+    var heaterBeds: MutableList<String> = ArrayList()
+
+    // https://github.com/Arksine/moonraker/blob/master/docs/printer_objects.md#extruder
+    var extruders: MutableList<String> = ArrayList()
+
+    // https://github.com/Arksine/moonraker/blob/master/docs/printer_objects.md#toolhead
+    var toolhead: String? = null
+
+    var latestUpdate: JSONObject? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,8 +77,11 @@ class MainActivity : AppCompatActivity() {
             R.xml.preferences, false
         );
 
+        moonrakerUrl = "http://${prefs.getString("moonraker_ip", "0.0.0.0")}:" +
+                "${prefs.getString("moonraker_port", "7125")}"
+
         // Connect to moonraker
-        connectToMoonraker(prefs)
+        connectToMoonraker()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -84,26 +103,12 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item);
     }
 
-    private fun connectToMoonraker(prefs: SharedPreferences?): Job? {
-        if (prefs == null) {
-            return null
-        }
-
+    private fun connectToMoonraker(): Job? {
         Log.d(
-            "PrinterConnect", "Connecting to http://${
-                prefs.getString(
-                    "moonraker_ip",
-                    "undefined"
-                )
-            }:${prefs.getString("moonraker_port", "undefined")}"
+            "PrinterConnect", "Connecting to $moonrakerUrl"
         )
 
-        val httpAsync = (
-                "http://" +
-                        prefs.getString("moonraker_ip", "undefined") + ":" +
-                        prefs.getString("moonraker_port", "undefined") +
-                        "/printer/info"
-                ).httpGet()
+        val httpAsync = ("$moonrakerUrl/printer/info").httpGet()
             .responseJson() { _, _, result ->
                 when (result) {
                     is Result.Failure -> {
@@ -112,12 +117,7 @@ class MainActivity : AppCompatActivity() {
 
                         val toast = Toast.makeText(
                             applicationContext,
-                            "Could not connect to http://${
-                                prefs.getString(
-                                    "moonraker_ip",
-                                    "undefined"
-                                )
-                            }:${prefs.getString("moonraker_port", "undefined")}",
+                            "Could not connect to http://$moonrakerUrl",
                             Toast.LENGTH_LONG
                         )
                         toast.show()
@@ -130,6 +130,7 @@ class MainActivity : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         )
                         toast.show()
+                        getPrinterObjects()
                     }
                 }
             }
@@ -137,6 +138,98 @@ class MainActivity : AppCompatActivity() {
         return MainScope().launch(Dispatchers.IO) {
             httpAsync.join()
         }
+    }
+
+    private fun getPrinterObjects() {
+        val httpAsync = ("$moonrakerUrl/printer/objects/list").httpGet()
+            .responseJson() { _, _, result ->
+                when (result) {
+                    is Result.Failure -> {
+                        val ex = result.getException()
+                        Log.e("GetPrinterObjects", ex.toString())
+                    }
+                    is Result.Success -> {
+                        val data = result.get().obj()
+                        Log.d(
+                            "PrinterObjects",
+                            data.getJSONObject("result").getJSONArray("objects").toString()
+                        )
+
+                        val arr = data.getJSONObject("result").getJSONArray("objects")
+
+                        for (i in 0..arr.length() - 1) {
+                            var obj = arr[i]
+
+                            if (obj.toString().startsWith("heater_bed")) {
+                                heaterBeds.add(obj.toString())
+                            } else if (obj.toString().startsWith("extruder")) {
+                                extruders.add(obj.toString())
+                            } else if (obj.toString().startsWith("toolhead")) {
+                                toolhead = obj.toString()
+                            }
+                        }
+                        startUpdateThread()
+                    }
+                }
+            }
+
+        httpAsync.join()
+
+    }
+
+    private fun startUpdateThread() {
+        val thread: Thread = object : Thread() {
+            override fun run() {
+                try {
+                    while (!this.isInterrupted) {
+                        sleep(1000)
+
+                        // Generate query
+                        var query = "$moonrakerUrl/printer/objects/query?"
+
+                        if (toolhead != null) {
+                            query += toolhead
+                        }
+
+                        for (bed in heaterBeds) {
+                            query += "&$bed"
+                        }
+
+                        for (extruder in extruders) {
+                            query += "&$extruder"
+                        }
+
+                        Log.d("latestUpdate", query)
+
+
+                        // Request objects and store
+
+                        val httpAsync = (query).httpGet()
+                            .responseJson() { _, _, result ->
+                                when (result) {
+                                    is Result.Failure -> {
+                                        val ex = result.getException()
+                                        Log.e("RequestObjects", ex.toString())
+                                    }
+                                    is Result.Success -> {
+                                        val data = result.get().obj()
+                                        Log.d("latestUpdate", data.toString())
+                                        latestUpdate = data.getJSONObject("result").getJSONObject("status")
+                                        Log.d("latestUpdate", latestUpdate.toString())
+
+                                    }
+                                }
+                            }
+
+                        httpAsync.join()
+                    }
+                } catch (e: InterruptedException) {
+
+                }
+            }
+        }
+
+        thread.start()
     }
 
     // Recreates activity on settings change
