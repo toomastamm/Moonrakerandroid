@@ -11,7 +11,7 @@ object PrintStatusAPI {
     private const val TAG = "PrintStatusAPI"
 
     fun getState(): String {
-        val path = "/printer/info"
+        val path = "https://mockprint.toomastamm.ee/printer/info"
 
         path.httpGet()
             .also { Log.d(TAG, "Loading state from ${it.cUrlString()}") }
@@ -28,6 +28,6 @@ object PrintStatusAPI {
                 }
             }
 
-        return ""
+        return "STATE"
     }
 }

@@ -12,7 +12,7 @@ object MoonrakerService {
 
     fun init(context: Context) {
         preferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
-        baseUrl = preferences.getString("moonraker_ip", "").toString()
+        baseUrl = preferences.getString("moonraker_ip", "https://mockprint.toomastamm.ee").toString()
         FuelManager.instance.basePath = baseUrl
     }
 

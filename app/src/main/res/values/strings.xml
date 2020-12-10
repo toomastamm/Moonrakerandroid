@@ -17,4 +17,10 @@
     <string name="settings_ip_summary">The IP for Moonraker API</string>
     <string name="settings_ip_title">IP-Address</string>
     <string name="prefs_test_string">Current moonraker location is %1$s:%2$s</string>
+    <string name="approx_total_print_time">Approx. Total Print Time:</string>
+    <string name="timelapse">Timelapse:</string>
+    <string name="user">User:</string>
+    <string name="file">File:</string>
+    <string name="state">State:</string>
+    <string name="connected_to">Connected to</string>
 </resources>
