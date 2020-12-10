@@ -25,21 +25,17 @@ class PrintStatusFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        val root = inflater.inflate(R.layout.fragment_print_status, container, false)
+        return inflater.inflate(R.layout.fragment_print_status, container, false)
+    }
 
-        Log.d("PrintStatusFragment", "View created")
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel.state.observe(viewLifecycleOwner, { item ->
             text_state.text = item
         })
         viewModel.file.observe(viewLifecycleOwner, { newFile ->
             text_file.text = newFile.toString()
         })
-        return root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         updateState()
     }
 
