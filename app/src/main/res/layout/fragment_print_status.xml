@@ -8,18 +8,43 @@
     tools:context=".ui.print_status.PrintStatusFragment">
 
     <TextView
+        android:id="@+id/label_host"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        tools:text="Connected to"
+        app:layout_constraintBottom_toTopOf="@id/label_state"
+        app:layout_constraintEnd_toStartOf="@id/text_host"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/text_host"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textSize="20sp"
-        tools:text="Host: 127.0.0.1:8080"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constrainedWidth="true"
+        tools:text="127.0.0.1:8080"
         app:layout_constraintBottom_toTopOf="@id/text_state"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/label_host"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/label_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        tools:text="State:"
+        app:layout_constraintBottom_toTopOf="@id/label_file"
+        app:layout_constraintEnd_toStartOf="@id/text_state"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_host" />
 
     <TextView
         android:id="@+id/text_state"
@@ -27,11 +52,116 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textSize="20sp"
-        tools:text="State: Printing"
-        app:layout_constraintHorizontal_bias="0.0"
+        tools:text="Printing"
+        app:layout_constraintBottom_toTopOf="@id/text_file"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/label_state"
+        app:layout_constraintTop_toBottomOf="@id/text_host" />
+
+
+
+    <TextView
+        android:id="@+id/label_file"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        tools:text="File:"
+        app:layout_constraintBottom_toTopOf="@id/label_user"
+        app:layout_constraintEnd_toStartOf="@id/text_file"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_state" />
+
+    <TextView
+        android:id="@+id/text_file"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        tools:text="bigfile.gcode"
+        app:layout_constraintBottom_toTopOf="@id/text_user"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/label_file"
+        app:layout_constraintTop_toBottomOf="@id/text_state" />
+
+
+
+    <TextView
+        android:id="@+id/label_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        tools:text="User:"
+        app:layout_constraintBottom_toTopOf="@id/label_timelapse"
+        app:layout_constraintEnd_toStartOf="@id/text_user"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_file" />
+
+    <TextView
+        android:id="@+id/text_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        tools:text="printuser"
+        app:layout_constraintBottom_toTopOf="@id/text_timelapse"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/label_user"
+        app:layout_constraintTop_toBottomOf="@id/text_file" />
+
+
+    <TextView
+        android:id="@+id/label_timelapse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        tools:text="Timelapse:"
+        app:layout_constraintBottom_toTopOf="@id/label_approx_total_time"
+        app:layout_constraintEnd_toStartOf="@id/text_timelapse"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_user" />
+
+    <TextView
+        android:id="@+id/text_timelapse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        tools:text="-"
+        app:layout_constraintBottom_toTopOf="@id/text_approx_total_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/label_timelapse"
+        app:layout_constraintTop_toBottomOf="@id/text_user" />
+
+
+    <TextView
+        android:id="@+id/label_approx_total_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        tools:text="Approx. Total Print Time: :"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/text_approx_total_time"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_timelapse" />
+
+    <TextView
+        android:id="@+id/text_approx_total_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        tools:text="-"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_host" />
+        app:layout_constraintStart_toEndOf="@id/label_approx_total_time"
+        app:layout_constraintTop_toBottomOf="@id/text_timelapse" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
