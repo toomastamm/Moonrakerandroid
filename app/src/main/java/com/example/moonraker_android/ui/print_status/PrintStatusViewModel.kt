@@ -6,8 +6,15 @@ import androidx.lifecycle.ViewModel
 
 class PrintStatusViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is print status Fragment"
+    private val state: MutableLiveData<String> = MutableLiveData<String>().also {
+        loadState()
     }
-    val text: LiveData<String> = _text
+
+    fun getState(): LiveData<String> {
+        return state
+    }
+
+    private fun loadState() {
+        // Do an asynchronous operation to fetch users.
+    }
 }

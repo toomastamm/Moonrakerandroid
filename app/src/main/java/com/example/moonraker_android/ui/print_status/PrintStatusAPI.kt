@@ -21,7 +21,7 @@ object PrintStatusAPI {
         preferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
     }
 
-    fun getStatus(): Job {
+    fun getState(): Job {
         val url = "${preferences.getString("moonraker_ip", "")}/printer/info"
         Log.d(LOGGING_TAG, "Loading status from $url")
 
