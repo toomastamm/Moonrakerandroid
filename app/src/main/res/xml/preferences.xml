@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <EditTextPreference
-        android:defaultValue="127.0.0.1"
-        android:key="moonraker_ip"
-        android:summary="@string/settings_ip_summary"
-        android:title="@string/settings_ip_title" />
+        android:defaultValue="http://127.0.0.1"
+        android:key="moonraker_host"
+        android:summary="@string/settings_host_summary"
+        android:title="@string/settings_host_title" />
 
     <EditTextPreference
         android:defaultValue="8080"

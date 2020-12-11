@@ -1,6 +1,7 @@
 package com.example.moonraker_android.ui.print_status
 
 data class StatusResponse(
+    val error: String?,
     val state: String,
     val filename: String,
     val message: String,

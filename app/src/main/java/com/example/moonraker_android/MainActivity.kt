@@ -1,7 +1,6 @@
 package com.example.moonraker_android
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -15,7 +14,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.preference.PreferenceManager
 import com.example.moonraker_android.api.MoonrakerService
 import com.example.moonraker_android.ui.settings.SettingsActivity
 import com.github.kittinunf.fuel.httpGet
@@ -26,15 +24,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import org.json.JSONArray
 import org.json.JSONObject
-
 
 class MainActivity : AppCompatActivity() {
 
     private val requestSettings = 100
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private var moonrakerUrl = ""
 
     // Printer objects
 
@@ -55,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        MoonrakerService.init(this)
+
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
@@ -72,16 +67,8 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        // Set up preferences
-        var prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
-        PreferenceManager.setDefaultValues(
-            this,
-            R.xml.preferences, false
-        );
-
-        moonrakerUrl = "http://${prefs.getString("moonraker_ip", "0.0.0.0")}:" +
-                "${prefs.getString("moonraker_port", "7125")}"
+        MoonrakerService.init(this)
 
         // Connect to moonraker
         connectToMoonraker()
@@ -107,12 +94,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun connectToMoonraker(): Job? {
-        Log.d(
-            "PrinterConnect", "Connecting to $moonrakerUrl"
-        )
-
-        val httpAsync = ("$moonrakerUrl/printer/info").httpGet()
-            .responseJson() { _, _, result ->
+        val httpAsync = ("/printer/info").httpGet()
+            .also { Log.d("PrinterConnect", "Connecting to ${it.url}") }
+            .responseJson { req, _, result ->
                 when (result) {
                     is Result.Failure -> {
                         val ex = result.getException()
@@ -120,7 +104,7 @@ class MainActivity : AppCompatActivity() {
 
                         val toast = Toast.makeText(
                             applicationContext,
-                            "Could not connect to http://$moonrakerUrl",
+                            "Could not connect to ${req.url}",
                             Toast.LENGTH_LONG
                         )
                         toast.show()
@@ -144,7 +128,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getPrinterObjects() {
-        val httpAsync = ("$moonrakerUrl/printer/objects/list").httpGet()
+        val httpAsync = ("/printer/objects/list").httpGet()
+            .also { Log.d("GetPrinterObjects", "Connecting to ${it.url}") }
             .responseJson() { _, _, result ->
                 when (result) {
                     is Result.Failure -> {
@@ -188,7 +173,7 @@ class MainActivity : AppCompatActivity() {
                         sleep(1000)
 
                         // Generate query
-                        var query = "$moonrakerUrl/printer/objects/query?"
+                        var query = "/printer/objects/query?"
 
                         if (toolhead != null) {
                             query += toolhead
@@ -208,6 +193,7 @@ class MainActivity : AppCompatActivity() {
                         // Request objects and store
 
                         val httpAsync = (query).httpGet()
+                            .also { Log.d("RequestObjects", "Connecting to ${it.url}") }
                             .responseJson() { _, _, result ->
                                 when (result) {
                                     is Result.Failure -> {

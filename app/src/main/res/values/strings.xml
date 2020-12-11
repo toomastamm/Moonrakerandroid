@@ -14,15 +14,15 @@
     <string name="settings_title">Settings</string>
     <string name="settings_port_summary">The port for Moonraker API</string>
     <string name="settings_port_title">Port</string>
-    <string name="settings_ip_summary">The IP for Moonraker API</string>
-    <string name="settings_ip_title">IP-Address</string>
+    <string name="settings_host_summary">The host for Moonraker API</string>
+    <string name="settings_host_title">Host</string>
     <string name="prefs_test_string">Current moonraker location is %1$s:%2$s</string>
 
     <string name="print_status_time_elapsed">Time since start:</string>
     <string name="print_status_print_time_elapsed">Time spent printing:</string>
     <string name="print_status_file">File:</string>
     <string name="print_status_state">State:</string>
-    <string name="print_status_connected_to">Connected to</string>
+    <string name="print_status_connected_to">Connected to %1$s</string>
     <string name="print_status_message">Message:</string>
     <string name="dash">-</string>
 </resources>
