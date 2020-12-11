@@ -2,6 +2,7 @@ package com.example.moonraker_android.ui.print_status
 
 import android.os.Bundle
 import android.text.format.DateUtils
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -21,7 +22,6 @@ class PrintStatusFragment : Fragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         viewModel.state.observe(viewLifecycleOwner, { item ->
             label_host.text = getString(R.string.print_status_connected_to, MoonrakerService.baseUrl)
-
             text_state.text = item.state
             text_file.text = item.filename
             text_message.text = item.message
@@ -50,7 +50,13 @@ class PrintStatusFragment : Fragment() {
     private fun updateState() {
         val thread: Thread = object : Thread() {
             override fun run() {
-                viewModel.loadStatus()
+                try {
+                    while (!this.isInterrupted) {
+                        sleep(1000)
+                        viewModel.loadStatus()
+                    }
+                } catch (e: InterruptedException) {
+                }
             }
         }
 
