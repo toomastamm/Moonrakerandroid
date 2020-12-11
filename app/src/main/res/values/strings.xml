@@ -22,7 +22,7 @@
     <string name="print_status_print_time_elapsed">Time spent printing:</string>
     <string name="print_status_file">File:</string>
     <string name="print_status_state">State:</string>
-    <string name="print_status_connected_to">Connected to</string>
+    <string name="print_status_connected_to">Connected to %1$s</string>
     <string name="print_status_message">Message:</string>
     <string name="dash">-</string>
 </resources>

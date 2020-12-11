@@ -17,7 +17,9 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
 import com.example.moonraker_android.api.MoonrakerService
+import com.example.moonraker_android.ui.print_status.PrintStatusAPI
 import com.example.moonraker_android.ui.settings.SettingsActivity
+import com.github.kittinunf.fuel.core.extensions.cUrlString
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.Result
@@ -71,7 +73,7 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        
+
         MoonrakerService.init(this)
 
         // Connect to moonraker
@@ -98,12 +100,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun connectToMoonraker(): Job? {
-        Log.d(
-            "PrinterConnect", "Connecting to $moonrakerUrl"
-        )
-
-        val httpAsync = ("$moonrakerUrl/printer/info").httpGet()
-            .responseJson() { _, _, result ->
+        val httpAsync = ("/printer/info").httpGet()
+            .also { Log.d("PrinterConnect", "Connecting to ${it.url}") }
+            .responseJson { req, _, result ->
                 when (result) {
                     is Result.Failure -> {
                         val ex = result.getException()
@@ -111,7 +110,7 @@ class MainActivity : AppCompatActivity() {
 
                         val toast = Toast.makeText(
                             applicationContext,
-                            "Could not connect to http://$moonrakerUrl",
+                            "Could not connect to ${req.url}",
                             Toast.LENGTH_LONG
                         )
                         toast.show()
@@ -135,7 +134,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getPrinterObjects() {
-        val httpAsync = ("$moonrakerUrl/printer/objects/list").httpGet()
+        val httpAsync = ("/printer/objects/list").httpGet()
+            .also { Log.d("GetPrinterObjects", "Connecting to ${it.url}") }
             .responseJson() { _, _, result ->
                 when (result) {
                     is Result.Failure -> {
@@ -179,7 +179,7 @@ class MainActivity : AppCompatActivity() {
                         sleep(1000)
 
                         // Generate query
-                        var query = "$moonrakerUrl/printer/objects/query?"
+                        var query = "/printer/objects/query?"
 
                         if (toolhead != null) {
                             query += toolhead
@@ -199,6 +199,7 @@ class MainActivity : AppCompatActivity() {
                         // Request objects and store
 
                         val httpAsync = (query).httpGet()
+                            .also { Log.d("RequestObjects", "Connecting to ${it.url}") }
                             .responseJson() { _, _, result ->
                                 when (result) {
                                     is Result.Failure -> {

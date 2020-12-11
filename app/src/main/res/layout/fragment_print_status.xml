@@ -15,21 +15,10 @@
         android:textSize="20sp"
         android:layout_marginStart="0dp"
         android:layout_marginTop="16dp"
+        android:paddingBottom="32dp"
         android:text="@string/print_status_connected_to"
-        app:layout_constraintEnd_toStartOf="@id/text_host"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/text_host"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="16dp"
-        tools:text="127.0.0.1:8080"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/label_host"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -56,34 +45,7 @@
         tools:text="Printing"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/label_state"
-        app:layout_constraintTop_toBottomOf="@id/text_host" />
-
-
-
-    <TextView
-        android:id="@+id/label_file"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:text="@string/print_status_file"
-        app:layout_constraintEnd_toStartOf="@id/text_file"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_state" />
-
-    <TextView
-        android:id="@+id/text_file"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        tools:text="bigfile.gcode"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/label_file"
-        app:layout_constraintTop_toBottomOf="@id/text_state" />
+        app:layout_constraintTop_toBottomOf="@id/label_host" />
 
 
 
@@ -98,7 +60,7 @@
         android:text="@string/print_status_message"
         app:layout_constraintEnd_toStartOf="@id/text_message"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_file" />
+        app:layout_constraintTop_toBottomOf="@id/label_state" />
 
     <TextView
         android:id="@+id/text_message"
@@ -110,7 +72,35 @@
         tools:text="Some message"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/label_message"
-        app:layout_constraintTop_toBottomOf="@id/text_file" />
+        app:layout_constraintTop_toBottomOf="@id/text_state" />
+
+
+
+    <TextView
+        android:id="@+id/label_file"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:text="@string/print_status_file"
+        app:layout_constraintEnd_toStartOf="@id/text_file"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_message" />
+
+    <TextView
+        android:id="@+id/text_file"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        tools:text="bigfile.gcode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/label_file"
+        app:layout_constraintTop_toBottomOf="@id/text_message" />
+
 
 
     <TextView
@@ -124,7 +114,7 @@
         android:text="@string/print_status_time_elapsed"
         app:layout_constraintEnd_toStartOf="@id/text_time_since_start"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_message" />
+        app:layout_constraintTop_toBottomOf="@id/label_file" />
 
     <TextView
         android:id="@+id/text_time_since_start"
@@ -136,7 +126,8 @@
         android:text="@string/dash"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/label_time_since_start"
-        app:layout_constraintTop_toBottomOf="@id/text_message" />
+        app:layout_constraintTop_toBottomOf="@id/text_file" />
+
 
 
     <TextView
