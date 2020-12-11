@@ -5,9 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class PrintStatusViewModel : ViewModel() {
+    private val _state = MutableLiveData<StatusResponse>()
+    val state: LiveData<StatusResponse>
+        get() = _state
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is print status Fragment"
+    fun loadStatus() {
+        PrintStatusAPI.getStatus(_state)
     }
-    val text: LiveData<String> = _text
 }
