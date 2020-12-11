@@ -5,19 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class PrintStatusViewModel : ViewModel() {
-    private val _state = MutableLiveData<String>()
-    val state: LiveData<String>
+    private val _state = MutableLiveData<StatusResponse>()
+    val state: LiveData<StatusResponse>
         get() = _state
 
-    val file: MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
-    }
-
-    fun loadState() {
-        _state.postValue(PrintStatusAPI.getState())
-    }
-
-    fun loadFile() {
-        file.postValue("some-file.gcode")
+    fun loadStatus() {
+        // _state.postValue(PrintStatusAPI.getStatus())
+        PrintStatusAPI.getStatus(_state)
     }
 }
