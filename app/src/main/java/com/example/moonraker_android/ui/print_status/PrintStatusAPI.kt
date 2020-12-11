@@ -30,8 +30,8 @@ object PrintStatusAPI {
                             state = stats.getString("state"),
                             filename = stats.getString("filename"),
                             message = stats.getString("message"),
-                            print_duration = stats.getDouble("print_duration"),
-                            total_duration = stats.getDouble("total_duration"),
+                            print_duration = stats.getLong("print_duration"),
+                            total_duration = stats.getLong("total_duration"),
                         )
                         _state.postValue(resp)
                     }

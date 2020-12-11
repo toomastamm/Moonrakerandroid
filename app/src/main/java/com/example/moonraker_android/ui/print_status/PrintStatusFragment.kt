@@ -1,6 +1,7 @@
 package com.example.moonraker_android.ui.print_status
 
 import android.os.Bundle
+import android.text.format.DateUtils
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -9,8 +10,6 @@ import kotlinx.android.synthetic.main.fragment_print_status.*
 
 class PrintStatusFragment : Fragment() {
 
-    // Use the 'by activityViewModels()' Kotlin property delegate
-    // from the fragment-ktx artifact
     private val viewModel: PrintStatusViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -22,6 +21,9 @@ class PrintStatusFragment : Fragment() {
         viewModel.state.observe(viewLifecycleOwner, { item ->
             text_state.text = item.state
             text_file.text = item.filename
+            text_message.text = item.message
+            text_time_since_start.text = formatDuration(item.total_duration)
+            text_time_spent_printing.text = formatDuration(item.print_duration)
         })
         return inflater.inflate(R.layout.fragment_print_status, container, false)
     }
@@ -30,6 +32,12 @@ class PrintStatusFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         updateState()
+    }
+
+    private fun formatDuration(seconds: Long): String = if (seconds < 60) {
+        seconds.toString()
+    } else {
+        DateUtils.formatElapsedTime(seconds)
     }
 
     private fun updateState() {

@@ -10,7 +10,6 @@ class PrintStatusViewModel : ViewModel() {
         get() = _state
 
     fun loadStatus() {
-        // _state.postValue(PrintStatusAPI.getStatus())
         PrintStatusAPI.getStatus(_state)
     }
 }

@@ -4,6 +4,6 @@ data class StatusResponse(
     val state: String,
     val filename: String,
     val message: String,
-    val total_duration: Number,
-    val print_duration: Number,
+    val total_duration: Long,
+    val print_duration: Long,
 )
