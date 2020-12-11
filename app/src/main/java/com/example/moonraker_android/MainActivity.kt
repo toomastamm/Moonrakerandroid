@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
 
     private val requestSettings = 100
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private var moonrakerUrl = ""
 
     // Printer objects
 
@@ -55,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        MoonrakerService.init(this)
+
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
@@ -72,16 +71,8 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        // Set up preferences
-        var prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-
-        PreferenceManager.setDefaultValues(
-            this,
-            R.xml.preferences, false
-        );
-
-        moonrakerUrl = "http://${prefs.getString("moonraker_ip", "0.0.0.0")}:" +
-                "${prefs.getString("moonraker_port", "7125")}"
+        
+        MoonrakerService.init(this)
 
         // Connect to moonraker
         connectToMoonraker()
