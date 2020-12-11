@@ -1,7 +1,6 @@
 package com.example.moonraker_android
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -15,11 +14,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.preference.PreferenceManager
 import com.example.moonraker_android.api.MoonrakerService
-import com.example.moonraker_android.ui.print_status.PrintStatusAPI
 import com.example.moonraker_android.ui.settings.SettingsActivity
-import com.github.kittinunf.fuel.core.extensions.cUrlString
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.Result
@@ -28,9 +24,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import org.json.JSONArray
 import org.json.JSONObject
-
 
 class MainActivity : AppCompatActivity() {
 
