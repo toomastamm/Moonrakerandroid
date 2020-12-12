@@ -4,28 +4,49 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.activityViewModels
+import com.example.moonraker_android.MainActivity
 import com.example.moonraker_android.R
 
 class TemperaturesFragment : Fragment() {
 
-    private lateinit var temperaturesViewModel: TemperaturesViewModel
+
+    lateinit var mainActivity: MainActivity
+
+    private val viewModel: TemperaturesViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        temperaturesViewModel =
-            ViewModelProviders.of(this).get(TemperaturesViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_temperatures, container, false)
-        val textView: TextView = root.findViewById(R.id.text_temperatures)
-        temperaturesViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
+        mainActivity = activity as MainActivity
+
+        return inflater.inflate(R.layout.fragment_temperatures, container, false)
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        updateState()
+    }
+
+    private fun updateState() {
+        val thread: Thread = object : Thread() {
+            override fun run() {
+                try {
+                    while (!this.isInterrupted) {
+                        sleep(1000)
+                        viewModel.loadStatus(mainActivity.heaterBeds, mainActivity.extruders)
+                    }
+                } catch (e: InterruptedException) {
+                }
+            }
+        }
+
+        thread.start()
+    }
+
+
 }
