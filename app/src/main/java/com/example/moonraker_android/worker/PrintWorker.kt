@@ -70,7 +70,6 @@ class PrintWorker(context: Context, parameters: WorkerParameters) : CoroutineWor
             .setTicker(title)
             .setContentText(progress)
             .setSmallIcon(R.drawable.ic_menu_print_status)
-            .setOngoing(true)
             // Add the cancel action to the notification which can
             // be used to cancel the worker
              .addAction(android.R.drawable.ic_delete, cancel, intent)
@@ -102,4 +101,6 @@ class PrintWorker(context: Context, parameters: WorkerParameters) : CoroutineWor
         // or other notification behaviors after this
         notificationManager.createNotificationChannel(mChannel)
     }
+
+
 }
