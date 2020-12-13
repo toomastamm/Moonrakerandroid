@@ -9,7 +9,9 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.work.*
 import com.example.moonraker_android.R
+import com.example.moonraker_android.worker.PrintWorker
 import kotlinx.android.synthetic.main.fragment_sd_card.*
 
 class SDCardFragment : Fragment() {
@@ -34,17 +36,27 @@ class SDCardFragment : Fragment() {
             }
             setFileInfo(fileList[0])
 
-            val fileAdapter = ArrayAdapter(activity as Context, android.R.layout.simple_list_item_1, fileList)
+            val fileAdapter = ArrayAdapter(
+                activity as Context,
+                android.R.layout.simple_list_item_1,
+                fileList
+            )
             spinner_files.adapter = fileAdapter
             spinner_files.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
-                override fun onItemSelected(adapterView: AdapterView<*>, view: View, i: Int, l: Long) {
+                override fun onItemSelected(
+                    adapterView: AdapterView<*>,
+                    view: View,
+                    i: Int,
+                    l: Long
+                ) {
                     setFileInfo(fileList[spinner_files.selectedItemPosition])
                     val fileIndex = spinner_files.selectedItemPosition
 
                     setFileInfo(fileList[fileIndex])
                     updateMetaDataState(fileList[fileIndex])
                 }
+
                 override fun onNothingSelected(adapterView: AdapterView<*>) {
 
                 }
@@ -62,9 +74,21 @@ class SDCardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         printButton.setOnClickListener {
-            SDCardAPI.printFile(fileList[spinner_files.selectedItemPosition], activity as Context)
+            startPrint(fileList[spinner_files.selectedItemPosition])
         }
         updateFilesState()
+    }
+
+    private fun startPrint(file: String) {
+        SDCardAPI.printFile(file, activity as Context)
+        val workerData = workDataOf(PrintWorker.KEY_INPUT_FILENAME to file)
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+        val worker = OneTimeWorkRequestBuilder<PrintWorker>()
+            .setConstraints(constraints)
+            .setInputData(workerData)
+            .build()
     }
 
     private fun setFileInfo(fileName: String) {

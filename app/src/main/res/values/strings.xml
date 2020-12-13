@@ -50,4 +50,7 @@
     <string name="hotend">Hotend:</string>
     <string name="set_hotend_temp">Set Hotend Temp</string>
     <string name="set_plate_temp">Set Plate Temp</string>
+    <string name="channel_name">Print status</string>
+    <string name="channel_description">Printing $1%s</string>
+    <string name="notification_title">3D printing in progress</string>
 </resources>
