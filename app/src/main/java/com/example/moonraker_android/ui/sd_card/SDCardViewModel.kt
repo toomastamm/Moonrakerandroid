@@ -29,6 +29,10 @@ class SDCardViewModel(application: Application) : AndroidViewModel(application) 
         return roomDb.getFileDao().getFileByName(fileName)
     }
 
+    fun getFileNames(): ArrayList<String> {
+        return ArrayList(roomDb.getFileDao().getFileNames().toList())
+    }
+
     fun addFile(file: SDCardFileResponse) {
         roomDb.getFileDao().insertFile(file)
     }

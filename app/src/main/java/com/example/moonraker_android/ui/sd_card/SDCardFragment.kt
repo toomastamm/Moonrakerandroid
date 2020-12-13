@@ -15,7 +15,6 @@ import com.example.moonraker_android.worker.PrintWorker
 import kotlinx.android.synthetic.main.fragment_sd_card.*
 
 class SDCardFragment : Fragment() {
-
     private var fileList = arrayListOf<String>()
     private lateinit var viewModel: SDCardViewModel
 
@@ -37,10 +36,12 @@ class SDCardFragment : Fragment() {
         viewModel.state.observe(viewLifecycleOwner, { item ->
             fileList = arrayListOf() // reset the list when new files are added to the SD card
 
-            for (i in 0 until item.size) {
-                val file = item[i]
-                viewModel.addFile(file)
-                fileList.add(file.filename)
+            if (item.size != 0) {
+                for (i in 0 until item.size) {
+                    val file = item[i]
+                    viewModel.addFile(file)
+                    fileList.add(file.filename)
+                }
             }
             setFileInfo(fileList[0])
 
@@ -60,9 +61,7 @@ class SDCardFragment : Fragment() {
                 ) {
                     setFileInfo(fileList[spinner_files.selectedItemPosition])
                     val fileIndex = spinner_files.selectedItemPosition
-
                     setFileInfo(fileList[fileIndex])
-                    updateMetaDataState(fileList[fileIndex])
                 }
 
                 override fun onNothingSelected(adapterView: AdapterView<*>) {
@@ -71,9 +70,7 @@ class SDCardFragment : Fragment() {
             }
         })
         viewModel.metaData.observe(viewLifecycleOwner, { item ->
-            text_slicer.text = item.slicerName
-            text_slicer_version.text = item.slicerVersion
-            text_estimated_time.text = item.estimatedTime
+            viewModel.addFileMetadata(item)
         })
 
         printButton.setOnClickListener {
@@ -98,23 +95,22 @@ class SDCardFragment : Fragment() {
 
     private fun setFileInfo(fileName: String) {
         val file = viewModel.getFileByName(fileName)
+        val fileMetaData = viewModel.getFileMetadataByFileName(fileName)
         text_modified.text = file.modified
         text_size.text = file.size
+        text_slicer.text = fileMetaData.slicerName
+        text_slicer_version.text = fileMetaData.slicerVersion
+        text_estimated_time.text = fileMetaData.estimatedTime
     }
 
     private fun updateFilesState() {
         val thread: Thread = object : Thread() {
             override fun run() {
                 viewModel.loadFiles()
-            }
-        }
-        thread.start()
-    }
-
-    private fun updateMetaDataState(fileName: String) {
-        val thread: Thread = object : Thread() {
-            override fun run() {
-                viewModel.loadFileDetails(fileName)
+                fileList = viewModel.getFileNames()
+                for (fileName in fileList) {
+                    viewModel.loadFileDetails(fileName)
+                }
             }
         }
         thread.start()
