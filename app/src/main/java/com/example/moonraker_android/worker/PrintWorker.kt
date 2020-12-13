@@ -4,6 +4,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.preference.PreferenceManager
@@ -15,13 +16,16 @@ import com.example.moonraker_android.utils.Utils
 class PrintWorker(context: Context, parameters: WorkerParameters) : CoroutineWorker(context, parameters) {
 
     companion object {
+        const val INPUT_ESTIMATED_TIME = "estimated_time"
         const val PREFS_NOTIFICATION_ENABLED = "notification_enabled"
         const val NOTIFICATION_ID = "moonraker_print_notification"
+        const val TAG = "PrintWorker"
     }
 
     private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     override suspend fun doWork(): Result {
+        Log.d(TAG, "Started worker")
         val preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
         val notificationEnabled = preferences.getBoolean(PREFS_NOTIFICATION_ENABLED, false)
         if (!notificationEnabled) {

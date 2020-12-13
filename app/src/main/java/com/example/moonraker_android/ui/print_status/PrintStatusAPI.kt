@@ -14,7 +14,7 @@ object PrintStatusAPI {
         val path = "/printer/objects/query?print_stats"
 
         path.httpGet()
-            .also { Log.d(TAG, "Loading state from ${it.url}") }
+//            .also { Log.d(TAG, "Loading state from ${it.url}") }
             .responseJson { _, _, result ->
                 when (result) {
                     is Result.Failure -> {
@@ -32,7 +32,7 @@ object PrintStatusAPI {
                     }
                     is Result.Success -> {
                         val data = result.get().obj()
-                        Log.d(TAG, "Success response: $data")
+//                        Log.d(TAG, "Success response: $data")
                         val stats = data.getJSONObject("result").getJSONObject("status").getJSONObject("print_stats")
                         val resp = StatusResponse(
                             error = null,

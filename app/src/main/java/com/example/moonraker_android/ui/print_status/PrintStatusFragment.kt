@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.moonraker_android.R
 import com.example.moonraker_android.api.MoonrakerService
+import com.example.moonraker_android.utils.Utils
 import kotlinx.android.synthetic.main.fragment_print_status.*
 
 class PrintStatusFragment : Fragment() {
@@ -26,8 +27,8 @@ class PrintStatusFragment : Fragment() {
             text_state.text = item.state
             text_file.text = item.filename
             text_message.text = item.message
-            text_time_since_start.text = formatDuration(item.total_duration)
-            text_time_spent_printing.text = formatDuration(item.print_duration)
+            text_time_since_start.text = Utils.secondsToHoursMinutesSeconds(item.total_duration)
+            text_time_spent_printing.text = Utils.secondsToHoursMinutesSeconds(item.print_duration)
 
             item.error?.let {
                 label_host.text = it
@@ -38,14 +39,7 @@ class PrintStatusFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         updateState()
-    }
-
-    private fun formatDuration(seconds: Long): String = if (seconds < 60) {
-        seconds.toString()
-    } else {
-        DateUtils.formatElapsedTime(seconds)
     }
 
     private fun updateState() {
