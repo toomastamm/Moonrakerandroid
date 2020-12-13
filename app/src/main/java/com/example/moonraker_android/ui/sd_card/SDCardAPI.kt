@@ -32,7 +32,7 @@ object SDCardAPI {
                         val resp = SDCardFileResponse(
                             error = ex.localizedMessage,
                             filename = "",
-                            modified = null,
+                            modified = "",
                             size = "0 MB",
                         )
                         val files = arrayListOf(resp)
@@ -47,7 +47,7 @@ object SDCardAPI {
                                 error = null,
                                 filename = fileObject.getString("filename"),
                                 modified = Instant.ofEpochSecond(fileObject.getDouble("modified").toLong())
-                                    .atZone(ZoneId.systemDefault()).toLocalDateTime(),
+                                    .atZone(ZoneId.systemDefault()).toLocalDateTime().toString(),
                                 size = (fileObject.getLong("size")/1000000.00).toString() + " MB",
                             )
                             files.add(response)
@@ -69,6 +69,7 @@ object SDCardAPI {
                         val ex = result.getException()
                         Log.e(TAG, "Error response: $ex")
                         val response = SDCardFileMetaDataResponse(
+                            fileName = "",
                             error = ex.localizedMessage,
                             estimatedTime = "",
                             slicerName = "",
@@ -80,6 +81,7 @@ object SDCardAPI {
                         val data = result.get().obj()
                         val metaDataObject = data.getJSONObject("result")
                         val response = SDCardFileMetaDataResponse(
+                            fileName = metaDataObject.getString("filename"),
                             error = null,
                             estimatedTime = Utils.secondsToHoursMinutesSeconds(metaDataObject.getLong("estimated_time")),
                             slicerName = metaDataObject.getString("slicer"),
