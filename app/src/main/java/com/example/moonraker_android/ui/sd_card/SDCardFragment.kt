@@ -90,7 +90,7 @@ class SDCardFragment : Fragment() {
             .setConstraints(constraints)
             .setInputData(workerData)
             .build()
-        WorkManager.getInstance().enqueue(workRequest)
+        WorkManager.getInstance(activity as Context).enqueue(workRequest)
     }
 
     private fun setFileInfo(fileName: String) {

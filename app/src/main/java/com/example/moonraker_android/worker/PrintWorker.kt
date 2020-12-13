@@ -1,12 +1,15 @@
 package com.example.moonraker_android.worker
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
+import android.provider.Settings.Global.getString
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.preference.PreferenceManager
 import androidx.work.*
 import com.example.moonraker_android.R
@@ -19,6 +22,7 @@ class PrintWorker(context: Context, parameters: WorkerParameters) : CoroutineWor
         const val INPUT_ESTIMATED_TIME = "estimated_time"
         const val PREFS_NOTIFICATION_ENABLED = "notification_enabled"
         const val NOTIFICATION_ID = "moonraker_print_notification"
+        const val NOTIFICATION_INT_ID = 4159
         const val TAG = "PrintWorker"
     }
 
@@ -37,25 +41,36 @@ class PrintWorker(context: Context, parameters: WorkerParameters) : CoroutineWor
         return Result.success()
     }
 
-    private suspend fun updatePrintStatus() {
-        // Calls setForegroundInfo() periodically when it needs to update
-        // the ongoing Notification
+    private fun updatePrintStatus() {
         while (!this.isStopped) {
             val status = PrintStatusAPI.getPrintState()
             if (status.state == "printing") {
                 val progress = Utils.secondsToHoursMinutesSeconds(status.print_duration)
-                setForeground(createForegroundInfo(progress))
+                val title = applicationContext.getString(R.string.notification_title)
+                val notification = createNotification(title, progress)
+                NotificationManagerCompat.from(applicationContext).notify(NOTIFICATION_INT_ID, notification)
             } else {
                 break
             }
         }
     }
 
+    private fun createNotification(title: String, progress: String): Notification {
+        return NotificationCompat.Builder(applicationContext, NOTIFICATION_ID)
+            .setContentTitle(title)
+            .setTicker(title)
+            .setContentText(progress)
+            .setSmallIcon(R.drawable.ic_menu_print_status)
+            .setOngoing(true)
+            // Add the cancel action to the notification which can
+            // be used to cancel the worker
+            // .addAction(android.R.drawable.ic_delete, cancel, intent)
+            .build()
+    }
+
     // Creates an instance of ForegroundInfo which can be used to update the
     // ongoing notification.
     private fun createForegroundInfo(progress: String): ForegroundInfo {
-        val id = NOTIFICATION_ID
-        val title = applicationContext.getString(R.string.notification_title)
         // val cancel = applicationContext.getString(R.string.cancel_download)
         // This PendingIntent can be used to cancel the worker
         val intent = WorkManager.getInstance(applicationContext)
@@ -66,18 +81,9 @@ class PrintWorker(context: Context, parameters: WorkerParameters) : CoroutineWor
             createChannel()
         }
 
-        val notification = NotificationCompat.Builder(applicationContext, id)
-            .setContentTitle(title)
-            .setTicker(title)
-            .setContentText(progress)
-            .setSmallIcon(R.drawable.ic_menu_print_status)
-            .setOngoing(true)
-            // Add the cancel action to the notification which can
-            // be used to cancel the worker
-            // .addAction(android.R.drawable.ic_delete, cancel, intent)
-            .build()
-
-        return ForegroundInfo(4129, notification)
+        val title = applicationContext.getString(R.string.notification_title)
+        val notification = createNotification(title, progress)
+        return ForegroundInfo(NOTIFICATION_INT_ID, notification)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
