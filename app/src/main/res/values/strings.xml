@@ -44,4 +44,10 @@
     <string name="positive_10">+10</string>
     <string name="positive_1">+1</string>
     <string name="positive_01">+0.1</string>
+    <string name="default_temp">0.0C</string>
+    <string name="temp_target">Target:</string>
+    <string name="heated_plate">Heated\nPlate:</string>
+    <string name="hotend">Hotend:</string>
+    <string name="set_hotend_temp">Set Hotend Temp</string>
+    <string name="set_plate_temp">Set Plate Temp</string>
 </resources>

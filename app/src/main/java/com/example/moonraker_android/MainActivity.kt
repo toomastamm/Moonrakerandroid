@@ -163,7 +163,7 @@ class MainActivity : AppCompatActivity() {
         httpAsync.join()
 
     }
-    
+
     // Recreates activity on settings change
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
