@@ -28,10 +28,12 @@ class PrintWorker(context: Context, parameters: WorkerParameters) : CoroutineWor
 
     private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     private val preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-    private val estimatedTime = inputData.getString(INPUT_ESTIMATED_TIME)
+    private lateinit var estimatedTime: String
 
     override suspend fun doWork(): Result {
         Log.d(TAG, "Started worker")
+        estimatedTime = inputData.getString(INPUT_ESTIMATED_TIME)
+            ?: return Result.failure()
         if (!preferences.getBoolean(PREFS_NOTIFICATION_ENABLED, false)) {
             return Result.success()
         }
@@ -47,24 +49,23 @@ class PrintWorker(context: Context, parameters: WorkerParameters) : CoroutineWor
                 break
             }
             val status = PrintStatusAPI.getPrintState()
-//            if (status.state == "printing") {
+            if (status.state == "printing") {
                 val progress = Utils.secondsToHoursMinutesSeconds(status.total_duration) + " out of " + estimatedTime
                 val title = applicationContext.getString(R.string.notification_title)
                 val notification = createNotification(title, progress)
                 NotificationManagerCompat.from(applicationContext).notify(NOTIFICATION_INT_ID, notification)
-//            } else {
-//                break
-//            }
+            } else {
+                break
+            }
         }
     }
 
     private fun createNotification(title: String, progress: String): Notification {
-        val id = NOTIFICATION_ID
          val cancel = applicationContext.getString(R.string.remove_notification)
         // This PendingIntent can be used to cancel the worker
         val intent = WorkManager.getInstance(applicationContext)
-            .createCancelPendingIntent(getId())
-        return NotificationCompat.Builder(applicationContext, id)
+            .createCancelPendingIntent(id)
+        return NotificationCompat.Builder(applicationContext, NOTIFICATION_ID)
             .setContentTitle(title)
             .setTicker(title)
             .setContentText(progress)
