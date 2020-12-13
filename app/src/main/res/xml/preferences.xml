@@ -11,4 +11,10 @@
         android:key="moonraker_port"
         android:summary="@string/settings_port_summary"
         android:title="@string/settings_port_title" />
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="notification_enabled"
+        android:summary="Enable print status notification"
+        android:title="Print status notification" />
 </androidx.preference.PreferenceScreen>

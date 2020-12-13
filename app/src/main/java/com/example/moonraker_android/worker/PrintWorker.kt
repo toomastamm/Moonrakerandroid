@@ -6,38 +6,45 @@ import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import androidx.preference.PreferenceManager
 import androidx.work.*
 import com.example.moonraker_android.R
+import com.example.moonraker_android.ui.print_status.PrintStatusAPI
+import com.example.moonraker_android.utils.Utils
 
 class PrintWorker(context: Context, parameters: WorkerParameters) : CoroutineWorker(context, parameters) {
 
     companion object {
-        const val KEY_INPUT_FILENAME = "KEY_INPUT_FILENAME"
+        const val PREFS_NOTIFICATION_ENABLED = "notification_enabled"
         const val NOTIFICATION_ID = "moonraker_print_notification"
     }
 
     private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     override suspend fun doWork(): Result {
-        val inputUrl = inputData.getString(KEY_INPUT_FILENAME)
-            ?: return Result.failure()
-
+        val preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        val notificationEnabled = preferences.getBoolean(PREFS_NOTIFICATION_ENABLED, false)
+        if (!notificationEnabled) {
+            return Result.success()
+        }
         val progress = "Starting print"
         setForeground(createForegroundInfo(progress))
-        print(inputUrl)
+        updatePrintStatus()
         return Result.success()
     }
 
-    private fun print(inputUrl: String) {
+    private suspend fun updatePrintStatus() {
         // Calls setForegroundInfo() periodically when it needs to update
         // the ongoing Notification
-//        setForegroundInfo()
-    }
-
-    private fun updatePrintStatus() {
-        // Calls setForegroundInfo() periodically when it needs to update
-        // the ongoing Notification
-//        PrintStatusAPI.getStatus()
+        while (!this.isStopped) {
+            val status = PrintStatusAPI.getPrintState()
+            if (status.state == "printing") {
+                val progress = Utils.secondsToHoursMinutesSeconds(status.print_duration)
+                setForeground(createForegroundInfo(progress))
+            } else {
+                break
+            }
+        }
     }
 
     // Creates an instance of ForegroundInfo which can be used to update the

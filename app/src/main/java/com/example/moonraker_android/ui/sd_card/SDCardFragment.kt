@@ -81,13 +81,14 @@ class SDCardFragment : Fragment() {
 
     private fun startPrint(file: String) {
         SDCardAPI.printFile(file, activity as Context)
-        val workerData = workDataOf(PrintWorker.KEY_INPUT_FILENAME to file)
+//        val workerData = workDataOf(
+//            PrintWorker.ESTIMATED_TIME to )
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
         val worker = OneTimeWorkRequestBuilder<PrintWorker>()
             .setConstraints(constraints)
-            .setInputData(workerData)
+//            .setInputData(workerData)
             .build()
     }
 
