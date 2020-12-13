@@ -28,12 +28,11 @@ class PrintWorker(context: Context, parameters: WorkerParameters) : CoroutineWor
 
     private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     private val preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-    private val notificationEnabled = preferences.getBoolean(PREFS_NOTIFICATION_ENABLED, false)
     private val estimatedTime = inputData.getString(INPUT_ESTIMATED_TIME)
 
     override suspend fun doWork(): Result {
         Log.d(TAG, "Started worker")
-        if (!notificationEnabled) {
+        if (!preferences.getBoolean(PREFS_NOTIFICATION_ENABLED, false)) {
             return Result.success()
         }
         val progress = "Starting print"
@@ -44,23 +43,28 @@ class PrintWorker(context: Context, parameters: WorkerParameters) : CoroutineWor
 
     private fun updatePrintStatus() {
         while (!this.isStopped) {
-            if (!notificationEnabled) {
+            if (!preferences.getBoolean(PREFS_NOTIFICATION_ENABLED, false)) {
                 break
             }
             val status = PrintStatusAPI.getPrintState()
-            if (status.state == "printing") {
+//            if (status.state == "printing") {
                 val progress = Utils.secondsToHoursMinutesSeconds(status.total_duration) + " out of " + estimatedTime
                 val title = applicationContext.getString(R.string.notification_title)
                 val notification = createNotification(title, progress)
                 NotificationManagerCompat.from(applicationContext).notify(NOTIFICATION_INT_ID, notification)
-            } else {
-                break
-            }
+//            } else {
+//                break
+//            }
         }
     }
 
     private fun createNotification(title: String, progress: String): Notification {
-        return NotificationCompat.Builder(applicationContext, NOTIFICATION_ID)
+        val id = NOTIFICATION_ID
+         val cancel = applicationContext.getString(R.string.remove_notification)
+        // This PendingIntent can be used to cancel the worker
+        val intent = WorkManager.getInstance(applicationContext)
+            .createCancelPendingIntent(getId())
+        return NotificationCompat.Builder(applicationContext, id)
             .setContentTitle(title)
             .setTicker(title)
             .setContentText(progress)
@@ -68,18 +72,13 @@ class PrintWorker(context: Context, parameters: WorkerParameters) : CoroutineWor
             .setOngoing(true)
             // Add the cancel action to the notification which can
             // be used to cancel the worker
-            // .addAction(android.R.drawable.ic_delete, cancel, intent)
+             .addAction(android.R.drawable.ic_delete, cancel, intent)
             .build()
     }
 
     // Creates an instance of ForegroundInfo which can be used to update the
     // ongoing notification.
     private fun createForegroundInfo(progress: String): ForegroundInfo {
-        // val cancel = applicationContext.getString(R.string.cancel_download)
-        // This PendingIntent can be used to cancel the worker
-        val intent = WorkManager.getInstance(applicationContext)
-            .createCancelPendingIntent(getId())
-
         // Create a Notification channel if necessary
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannel()
