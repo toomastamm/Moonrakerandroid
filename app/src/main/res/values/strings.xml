@@ -35,4 +35,5 @@
     <string name="estimated_time_placeholder">0 hour</string>
     <string name="slicer_name_placeholder">slicer placeholder</string>
     <string name="slicer_version_placeholder">1.73</string>
+    <string name="print_file">PRINT</string>
 </resources>

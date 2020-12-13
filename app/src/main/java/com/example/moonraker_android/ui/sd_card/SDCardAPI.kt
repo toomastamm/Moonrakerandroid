@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.github.kittinunf.fuel.httpGet
+import com.github.kittinunf.fuel.httpPost
 import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.Result
 import org.json.JSONObject
@@ -60,7 +61,7 @@ object SDCardAPI {
         val path = "/server/files/metadata?filename=$fileName"
 
         path.httpGet()
-            .also { Log.d(TAG, "Loading file metadata from ${it.url}") }
+            .also { Log.d(TAG, "Loading file $fileName metadata from ${it.url}") }
             .responseJson { _, _, result ->
                 when (result) {
                     is Result.Failure -> {
@@ -84,6 +85,26 @@ object SDCardAPI {
                             slicerVersion = metaDataObject.getString("slicer_version"),
                         )
                         _state.postValue(response)
+                    }
+                }
+            }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun printFile(fileName: String) {
+        val path = "/printer/print/start?filename=$fileName"
+
+        path.httpPost()
+            .also { Log.d(TAG, "Sending file $fileName to the printer ${it.url} for printing.") }
+            .responseJson { _, _, result ->
+                when (result) {
+                    is Result.Failure -> {
+                        val ex = result.getException()
+                        Log.e(TAG, "Error response: $ex")
+                    }
+                    is Result.Success -> {
+                        val data = result.get().obj()
+                        Log.d(TAG, "Response to the POST request: $data")
                     }
                 }
             }

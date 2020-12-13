@@ -18,6 +18,7 @@ class SDCardFragment : Fragment() {
 
     private val viewModel: SDCardViewModel by activityViewModels()
     private val fileMap = hashMapOf<String, SDCardFileResponse>()
+    private var fileList = arrayListOf<String>()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -27,7 +28,7 @@ class SDCardFragment : Fragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         viewModel.state.observe(viewLifecycleOwner, { item ->
-            val fileList = arrayListOf<String>()
+            fileList = arrayListOf() // reset the list when new files are added to the SD card
 
             for (i in 0 until item.size) {
                 val file = item[i]
@@ -55,14 +56,18 @@ class SDCardFragment : Fragment() {
         viewModel.metaData.observe(viewLifecycleOwner, { item ->
             text_slicer.text = item.slicerName
             text_slicer_version.text = item.slicerVersion
-            text_estimated_time.text = item.estimatedTime.toString()
+            text_estimated_time.text = item.estimatedTime
         })
         return inflater.inflate(R.layout.fragment_sd_card, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        printButton.setOnClickListener {
+            SDCardAPI.printFile(fileList[spinner_files.selectedItemPosition])
+        }
         updateFilesState()
     }
 
