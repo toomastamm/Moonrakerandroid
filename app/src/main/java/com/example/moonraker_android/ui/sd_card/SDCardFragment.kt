@@ -66,7 +66,7 @@ class SDCardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         printButton.setOnClickListener {
-            SDCardAPI.printFile(fileList[spinner_files.selectedItemPosition])
+            SDCardAPI.printFile(fileList[spinner_files.selectedItemPosition], activity as Context)
         }
         updateFilesState()
     }

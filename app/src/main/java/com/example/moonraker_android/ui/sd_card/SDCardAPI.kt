@@ -1,7 +1,9 @@
 package com.example.moonraker_android.ui.sd_card
 
+import android.content.Context
 import android.os.Build
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.github.kittinunf.fuel.httpGet
@@ -91,7 +93,7 @@ object SDCardAPI {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun printFile(fileName: String) {
+    fun printFile(fileName: String, context: Context) {
         val path = "/printer/print/start?filename=$fileName"
 
         path.httpPost()
@@ -101,6 +103,9 @@ object SDCardAPI {
                     is Result.Failure -> {
                         val ex = result.getException()
                         Log.e(TAG, "Error response: $ex")
+                        if (ex.message.equals("HTTP Exception 400 Bad Request")) {
+                            Toast.makeText(context,"Printer is already printing!", Toast.LENGTH_LONG).show()
+                        }
                     }
                     is Result.Success -> {
                         val data = result.get().obj()
