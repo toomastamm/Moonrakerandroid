@@ -156,7 +156,6 @@ class MainActivity : AppCompatActivity() {
                                 toolhead = obj.toString()
                             }
                         }
-                        startUpdateThread()
                     }
                 }
             }
@@ -164,63 +163,7 @@ class MainActivity : AppCompatActivity() {
         httpAsync.join()
 
     }
-
-    private fun startUpdateThread() {
-        val thread: Thread = object : Thread() {
-            override fun run() {
-                try {
-                    while (!this.isInterrupted) {
-                        sleep(1000)
-
-                        // Generate query
-                        var query = "/printer/objects/query?"
-
-                        if (toolhead != null) {
-                            query += toolhead
-                        }
-
-                        for (bed in heaterBeds) {
-                            query += "&$bed"
-                        }
-
-                        for (extruder in extruders) {
-                            query += "&$extruder"
-                        }
-
-                        Log.d("latestUpdate", query)
-
-
-                        // Request objects and store
-
-                        val httpAsync = (query).httpGet()
-                            .also { Log.d("RequestObjects", "Connecting to ${it.url}") }
-                            .responseJson() { _, _, result ->
-                                when (result) {
-                                    is Result.Failure -> {
-                                        val ex = result.getException()
-                                        Log.e("RequestObjects", ex.toString())
-                                    }
-                                    is Result.Success -> {
-                                        val data = result.get().obj()
-                                        Log.d("latestUpdate", data.toString())
-                                        latestUpdate = data.getJSONObject("result").getJSONObject("status")
-                                        Log.d("latestUpdate", latestUpdate.toString())
-
-                                    }
-                                }
-                            }
-
-                        httpAsync.join()
-                    }
-                } catch (e: InterruptedException) {
-
-                }
-            }
-        }
-
-        thread.start()
-    }
-
+    
     // Recreates activity on settings change
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
