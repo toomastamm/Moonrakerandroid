@@ -1,8 +1,13 @@
 package com.example.moonraker_android.ui.motors
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
+import com.example.moonraker_android.ui.print_status.PrintStatusAPI
+import com.example.moonraker_android.ui.sd_card.SDCardAPI
 import com.github.kittinunf.fuel.httpGet
+import com.github.kittinunf.fuel.httpPost
 import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.Result
 
@@ -50,5 +55,43 @@ object MotorsAPI {
                 }
             }
     }
+
+    fun moveMotor(axis: String, direction: String, amount: String) {
+        var path = "/printer/gcode/script?script="
+        var script = "G91\nG1 "
+
+        script += axis.toUpperCase()
+
+        script += if (direction.toLowerCase() == "negative") {
+            "-"
+        } else {
+            "+"
+        }
+
+        script += if (amount == "01") {
+            "0.1"
+        } else {
+            amount
+        }
+
+        script += " F6000\nG90"
+
+        path += script
+
+        path.httpPost().also { Log.d(TAG, "Loading state from ${it.url}") }
+            .responseJson { _, _, result ->
+                when (result) {
+                    is Result.Failure -> {
+                        val ex = result.getException()
+                        Log.e(TAG, "Error response: $ex")
+                    }
+                    is Result.Success -> {
+                        val data = result.get().obj()
+                        Log.d(TAG, "Response to the POST request: $data")
+                    }
+                }
+            }
+    }
+
 
 }
