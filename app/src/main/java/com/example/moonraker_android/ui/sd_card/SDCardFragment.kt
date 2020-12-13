@@ -80,7 +80,7 @@ class SDCardFragment : Fragment() {
     }
 
     private fun startPrint(file: String) {
-//        SDCardAPI.printFile(file, activity as Context)
+        SDCardAPI.printFile(file, activity as Context)
         val workerData = workDataOf(
             PrintWorker.INPUT_ESTIMATED_TIME to text_estimated_time.text)
         val constraints = Constraints.Builder()
