@@ -36,4 +36,12 @@
     <string name="slicer_name_placeholder">slicer placeholder</string>
     <string name="slicer_version_placeholder">1.73</string>
     <string name="print_file">PRINT</string>
+    <string name="negative_100">-100</string>
+    <string name="positive_100">+100</string>
+    <string name="negative_01">-0.1</string>
+    <string name="negative_1">-1</string>
+    <string name="negative_10">-10</string>
+    <string name="positive_10">+10</string>
+    <string name="positive_1">+1</string>
+    <string name="positive_01">+0.1</string>
 </resources>
