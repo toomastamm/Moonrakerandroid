@@ -1,14 +1,12 @@
 package com.example.moonraker_android.ui.sd_card
 
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.moonraker_android.R
@@ -20,7 +18,6 @@ class SDCardFragment : Fragment() {
     private val fileMap = hashMapOf<String, SDCardFileResponse>()
     private var fileList = arrayListOf<String>()
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -61,7 +58,6 @@ class SDCardFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_sd_card, container, false)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -78,7 +74,6 @@ class SDCardFragment : Fragment() {
 
     private fun updateFilesState() {
         val thread: Thread = object : Thread() {
-            @RequiresApi(Build.VERSION_CODES.O)
             override fun run() {
                 viewModel.loadFiles()
             }
@@ -88,7 +83,6 @@ class SDCardFragment : Fragment() {
 
     private fun updateMetaDataState(fileName: String) {
         val thread: Thread = object : Thread() {
-            @RequiresApi(Build.VERSION_CODES.O)
             override fun run() {
                 viewModel.loadFileDetails(fileName)
             }

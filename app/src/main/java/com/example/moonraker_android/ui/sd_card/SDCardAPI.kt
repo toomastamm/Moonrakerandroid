@@ -18,7 +18,6 @@ object SDCardAPI {
 
     private const val TAG = "SDCardAPI"
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun getFiles(_state: MutableLiveData<ArrayList<SDCardFileResponse>>) {
         val path = "/server/files/list?root=gcodes"
 
@@ -58,7 +57,6 @@ object SDCardAPI {
             }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun getFileMetadata(_state: MutableLiveData<SDCardFileMetaDataResponse>, fileName: String) {
         val path = "/server/files/metadata?filename=$fileName"
 
@@ -92,7 +90,6 @@ object SDCardAPI {
             }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun printFile(fileName: String, context: Context) {
         val path = "/printer/print/start?filename=$fileName"
 
