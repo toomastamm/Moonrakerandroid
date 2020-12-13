@@ -49,7 +49,7 @@ class PrintWorker(context: Context, parameters: WorkerParameters) : CoroutineWor
             }
             val status = PrintStatusAPI.getPrintState()
             if (status.state == "printing") {
-                val progress = Utils.secondsToHoursMinutesSeconds(status.print_duration) + " out of " + estimatedTime
+                val progress = Utils.secondsToHoursMinutesSeconds(status.total_duration) + " out of " + estimatedTime
                 val title = applicationContext.getString(R.string.notification_title)
                 val notification = createNotification(title, progress)
                 NotificationManagerCompat.from(applicationContext).notify(NOTIFICATION_INT_ID, notification)
