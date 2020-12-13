@@ -25,4 +25,14 @@
     <string name="print_status_connected_to">Connected to %1$s</string>
     <string name="print_status_message">Message:</string>
     <string name="dash">-</string>
+    <string name="file_modified">Modified:</string>
+    <string name="file_size">Size:</string>
+    <string name="estimated_time">Estimated time:</string>
+    <string name="slicer">Slicer:</string>
+    <string name="slicer_version">Slicer version:</string>
+    <string name="modified_time_placeholder">000000</string>
+    <string name="file_size_placeholder">0 MB</string>
+    <string name="estimated_time_placeholder">0 hour</string>
+    <string name="slicer_name_placeholder">slicer placeholder</string>
+    <string name="slicer_version_placeholder">1.73</string>
 </resources>

@@ -1,31 +1,93 @@
 package com.example.moonraker_android.ui.sd_card
 
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.activityViewModels
 import com.example.moonraker_android.R
+import kotlinx.android.synthetic.main.fragment_sd_card.*
 
 class SDCardFragment : Fragment() {
 
-    private lateinit var sdCardViewModel: SDCardViewModel
+    private val viewModel: SDCardViewModel by activityViewModels()
+    private val fileMap = hashMapOf<String, SDCardFileResponse>()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        sdCardViewModel =
-            ViewModelProviders.of(this).get(SDCardViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_sd_card, container, false)
-        val textView: TextView = root.findViewById(R.id.text_sd_card)
-        sdCardViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
+        super.onCreateView(inflater, container, savedInstanceState)
+        viewModel.state.observe(viewLifecycleOwner, { item ->
+            val fileList = arrayListOf<String>()
+
+            for (i in 0 until item.size) {
+                val file = item[i]
+                fileMap[file.filename] = file
+                fileList.add(file.filename)
+            }
+            setFileInfo(fileList[0])
+
+            val fileAdapter = ArrayAdapter(activity as Context, android.R.layout.simple_list_item_1, fileList)
+            spinner_files.adapter = fileAdapter
+            spinner_files.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+                override fun onItemSelected(adapterView: AdapterView<*>, view: View, i: Int, l: Long) {
+                    setFileInfo(fileList[spinner_files.selectedItemPosition])
+                    val fileIndex = spinner_files.selectedItemPosition
+
+                    setFileInfo(fileList[fileIndex])
+                    updateMetaDataState(fileList[fileIndex])
+                }
+                override fun onNothingSelected(adapterView: AdapterView<*>) {
+
+                }
+            }
         })
-        return root
+        viewModel.metaData.observe(viewLifecycleOwner, { item ->
+            text_slicer.text = item.slicerName
+            text_slicer_version.text = item.slicerVersion
+            text_estimated_time.text = item.estimatedTime.toString()
+        })
+        return inflater.inflate(R.layout.fragment_sd_card, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        updateFilesState()
+    }
+
+    private fun setFileInfo(fileName: String) {
+        text_modified.text = fileMap[fileName]?.modified.toString()
+        text_size.text = fileMap[fileName]?.size.toString()
+    }
+
+    private fun updateFilesState() {
+        val thread: Thread = object : Thread() {
+            @RequiresApi(Build.VERSION_CODES.O)
+            override fun run() {
+                viewModel.loadFiles()
+            }
+        }
+        thread.start()
+    }
+
+    private fun updateMetaDataState(fileName: String) {
+        val thread: Thread = object : Thread() {
+            @RequiresApi(Build.VERSION_CODES.O)
+            override fun run() {
+                viewModel.loadFileDetails(fileName)
+            }
+        }
+        thread.start()
     }
 }

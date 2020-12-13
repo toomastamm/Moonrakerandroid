@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item);
     }
 
-    private fun connectToMoonraker(): Job? {
+    private fun connectToMoonraker(): Job {
         val httpAsync = ("/printer/info").httpGet()
             .also { Log.d("PrinterConnect", "Connecting to ${it.url}") }
             .responseJson { req, _, result ->
@@ -145,8 +145,8 @@ class MainActivity : AppCompatActivity() {
 
                         val arr = data.getJSONObject("result").getJSONArray("objects")
 
-                        for (i in 0..arr.length() - 1) {
-                            var obj = arr[i]
+                        for (i in 0 until arr.length()) {
+                            val obj = arr[i]
 
                             if (obj.toString().startsWith("heater_bed")) {
                                 heaterBeds.add(obj.toString())
