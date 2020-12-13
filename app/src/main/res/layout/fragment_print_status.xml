@@ -75,6 +75,12 @@
         app:layout_constraintTop_toBottomOf="@id/text_state" />
 
 
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/message_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="label_message, text_message"/>
 
     <TextView
         android:id="@+id/label_file"
@@ -87,7 +93,7 @@
         android:text="@string/print_status_file"
         app:layout_constraintEnd_toStartOf="@id/text_file"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_message" />
+        app:layout_constraintTop_toBottomOf="@id/message_barrier" />
 
     <TextView
         android:id="@+id/text_file"
@@ -96,12 +102,18 @@
         android:textSize="20sp"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
-        tools:text="bigfile.gcode"
+        tools:text="bigfile-with-some-very-long-filename-that-spans-multiple-rows.gcode"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/label_file"
-        app:layout_constraintTop_toBottomOf="@id/text_message" />
+        app:layout_constraintTop_toBottomOf="@id/message_barrier" />
 
 
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/file_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="label_file, text_file"/>
 
     <TextView
         android:id="@+id/label_time_since_start"
@@ -114,7 +126,7 @@
         android:text="@string/print_status_time_elapsed"
         app:layout_constraintEnd_toStartOf="@id/text_time_since_start"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/label_file" />
+        app:layout_constraintTop_toBottomOf="@id/file_barrier" />
 
     <TextView
         android:id="@+id/text_time_since_start"
@@ -126,7 +138,7 @@
         android:text="@string/dash"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/label_time_since_start"
-        app:layout_constraintTop_toBottomOf="@id/text_file" />
+        app:layout_constraintTop_toBottomOf="@id/file_barrier" />
 
 
 
