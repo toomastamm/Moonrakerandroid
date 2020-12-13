@@ -29,6 +29,7 @@ class PrintWorker(context: Context, parameters: WorkerParameters) : CoroutineWor
     private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     private val preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
     private val notificationEnabled = preferences.getBoolean(PREFS_NOTIFICATION_ENABLED, false)
+    private val estimatedTime = inputData.getString(INPUT_ESTIMATED_TIME)
 
     override suspend fun doWork(): Result {
         Log.d(TAG, "Started worker")
@@ -48,7 +49,7 @@ class PrintWorker(context: Context, parameters: WorkerParameters) : CoroutineWor
             }
             val status = PrintStatusAPI.getPrintState()
             if (status.state == "printing") {
-                val progress = Utils.secondsToHoursMinutesSeconds(status.print_duration)
+                val progress = Utils.secondsToHoursMinutesSeconds(status.print_duration) + " out of " + estimatedTime
                 val title = applicationContext.getString(R.string.notification_title)
                 val notification = createNotification(title, progress)
                 NotificationManagerCompat.from(applicationContext).notify(NOTIFICATION_INT_ID, notification)
