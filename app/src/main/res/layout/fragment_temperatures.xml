@@ -14,7 +14,7 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:importantForAutofill="no"
-        android:inputType="numberDecimal"
+        android:inputType="number"
         android:text="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_hotend" />
@@ -119,7 +119,7 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:importantForAutofill="no"
-        android:inputType="numberDecimal"
+        android:inputType="number"
         android:text="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />

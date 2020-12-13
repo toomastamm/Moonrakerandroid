@@ -2,7 +2,9 @@ package com.example.moonraker_android.ui.temperatures
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.example.moonraker_android.ui.motors.MotorsAPI
 import com.github.kittinunf.fuel.httpGet
+import com.github.kittinunf.fuel.httpPost
 import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.Result
 
@@ -58,7 +60,7 @@ object TemperaturesAPI {
 
                         for (extruder in extruders) {
                             val currentExtruder = status.getJSONObject(extruder)
-                            heaterBedsTemperatures[extruder] = ObjectTemperatures(
+                            extrudersTemperatures[extruder] = ObjectTemperatures(
                                 current = currentExtruder.getDouble("temperature"),
                                 target = currentExtruder.getDouble("target")
                             )
@@ -73,6 +75,24 @@ object TemperaturesAPI {
 
                         Log.d(TAG, resp.toString())
                         _state.postValue(resp)
+                    }
+                }
+            }
+    }
+
+    fun setTemperatureTarget(name: String, target: String) {
+        var path = "/printer/gcode/script?script=SET_HEATER_TEMPERATURE HEATER=$name TARGET=$target"
+
+        path.httpPost().also { Log.d(TAG, "Loading state from ${it.url}") }
+            .responseJson { _, _, result ->
+                when (result) {
+                    is Result.Failure -> {
+                        val ex = result.getException()
+                        Log.e(TAG, "Error response: $ex")
+                    }
+                    is Result.Success -> {
+                        val data = result.get().obj()
+                        Log.d(TAG, "Response to the POST request: $data")
                     }
                 }
             }
