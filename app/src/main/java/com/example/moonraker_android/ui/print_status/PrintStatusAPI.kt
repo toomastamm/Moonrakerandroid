@@ -14,7 +14,7 @@ object PrintStatusAPI {
         val path = "/printer/objects/query?print_stats"
 
         path.httpGet()
-            .also { Log.d(TAG, "Loading state from ${it.url}") }
+//            .also { Log.d(TAG, "Loading state from ${it.url}") }
             .responseJson { _, _, result ->
                 when (result) {
                     is Result.Failure -> {
@@ -32,7 +32,7 @@ object PrintStatusAPI {
                     }
                     is Result.Success -> {
                         val data = result.get().obj()
-                        Log.d(TAG, "Success response: $data")
+//                        Log.d(TAG, "Success response: $data")
                         val stats = data.getJSONObject("result").getJSONObject("status").getJSONObject("print_stats")
                         val resp = StatusResponse(
                             error = null,
@@ -46,5 +46,51 @@ object PrintStatusAPI {
                     }
                 }
             }
+    }
+
+    fun getPrintState(): StatusResponse {
+        val path = "/printer/objects/query?print_stats"
+
+        var resp = StatusResponse(
+            error = "",
+            state = "",
+            filename = "",
+            message = "",
+            print_duration = 0,
+            total_duration = 0,
+        )
+
+
+        val (_, _, result) = path.httpGet()
+            .also { Log.d(TAG, "Loading state from ${it.url}") }
+            .responseJson()
+
+                when (result) {
+                    is Result.Failure -> {
+                        val ex = result.getException()
+                        resp = StatusResponse(
+                            error = ex.localizedMessage,
+                            state = "",
+                            filename = "",
+                            message = "",
+                            print_duration = 0,
+                            total_duration = 0,
+                        )
+                    }
+                    is Result.Success -> {
+                        val data = result.get().obj()
+                        val stats = data.getJSONObject("result").getJSONObject("status").getJSONObject("print_stats")
+                        resp = StatusResponse(
+                            error = null,
+                            state = stats.getString("state"),
+                            filename = stats.getString("filename"),
+                            message = stats.getString("message"),
+                            print_duration = stats.getLong("print_duration"),
+                            total_duration = stats.getLong("total_duration"),
+                        )
+                    }
+                }
+
+        return resp
     }
 }

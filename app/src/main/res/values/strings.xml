@@ -24,6 +24,7 @@
     <string name="print_status_state">State:</string>
     <string name="print_status_connected_to">Connected to %1$s</string>
     <string name="print_status_message">Message:</string>
+
     <string name="dash">-</string>
     <string name="file_modified">Modified:</string>
     <string name="file_size">Size:</string>
@@ -50,4 +51,9 @@
     <string name="hotend">Hotend:</string>
     <string name="set_hotend_temp">Set Hotend Temp</string>
     <string name="set_plate_temp">Set Plate Temp</string>
+
+    <string name="channel_name">Print status</string>
+    <string name="channel_description">Notification about current active print job</string>
+    <string name="notification_title">3D printing in progress</string>
+    <string name="remove_notification">Close</string>
 </resources>

@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
+import com.example.moonraker_android.utils.Utils
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPost
 import com.github.kittinunf.fuel.json.responseJson
@@ -80,7 +81,7 @@ object SDCardAPI {
                         val metaDataObject = data.getJSONObject("result")
                         val response = SDCardFileMetaDataResponse(
                             error = null,
-                            estimatedTime = secondsToHoursMinutesSeconds(metaDataObject.getLong("estimated_time")),
+                            estimatedTime = Utils.secondsToHoursMinutesSeconds(metaDataObject.getLong("estimated_time")),
                             slicerName = metaDataObject.getString("slicer"),
                             slicerVersion = metaDataObject.getString("slicer_version"),
                         )
@@ -112,10 +113,5 @@ object SDCardAPI {
             }
     }
 
-    private fun secondsToHoursMinutesSeconds(time: Long) : String{
-        val hours = time / 3600
-        val minutes = (time - hours * 3600) / 60
-        val seconds = time - hours * 3600 - minutes * 60
-        return hours.toString() + "h " + minutes.toString() + "m " + seconds.toString() + "s"
-    }
+
 }
