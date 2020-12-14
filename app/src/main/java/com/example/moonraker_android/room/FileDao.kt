@@ -18,6 +18,10 @@ interface FileDao {
     @Query("SELECT * FROM sd_card_file_metadata where filename LIKE :fileName")
     fun getFileMetadataByFileName(fileName: String): SDCardFileMetaDataResponse
 
+    // For debug purposes
+    @Query("DELETE FROM sd_card_file_metadata")
+    fun clearFileMetadata()
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertFile(file: SDCardFileResponse)
 

@@ -20,13 +20,15 @@ object SDCardAPI {
     private const val TAG = "SDCardAPI"
 
     fun getFiles(_state: MutableLiveData<ArrayList<SDCardFileResponse>>) {
+        //Log.d("SDCardAPI", "SDCardAPI, getFiles")
         val path = "/server/files/list?root=gcodes"
 
         path.httpGet()
-            .also { Log.d(TAG, "Loading files from ${it.url}") }
+            .also { Log.d(TAG, "SDCardAPI, Loading files from ${it.url}") } // WORKS
             .responseJson { _, _, result ->
                 when (result) {
                     is Result.Failure -> {
+                        Log.d("SDCardAPI", "SDCardAPI, getFile ERROR") // Not executed
                         val ex = result.getException()
                         Log.e(TAG, "Error response: $ex")
                         val resp = SDCardFileResponse(
@@ -39,6 +41,7 @@ object SDCardAPI {
                         _state.postValue(files)
                     }
                     is Result.Success -> {
+                        //Log.d("SDCardAPI", "SDCardAPI, getFiles") // WORKS
                         val data = result.get().obj()
                         val files = arrayListOf<SDCardFileResponse>()
                         for (i in 0 until data.getJSONArray("result").length()) {
@@ -52,6 +55,7 @@ object SDCardAPI {
                             )
                             files.add(response)
                         }
+                        //Log.d("SDCardAPI", "SDCardAPI, getFiles end") // WORKS
                         _state.postValue(files)
                     }
                 }
@@ -62,8 +66,9 @@ object SDCardAPI {
         val path = "/server/files/metadata?filename=$fileName"
 
         path.httpGet()
-            .also { Log.d(TAG, "Loading file $fileName metadata from ${it.url}") }
+            .also { Log.d(TAG, "SDCardAPI, Loading metadata for file $fileName from ${it.url}") } // WORKS, 2 TIMES
             .responseJson { _, _, result ->
+                Log.d("SDCardAPI", "SDCardAPI, getFileMetadata result: $result")
                 when (result) {
                     is Result.Failure -> {
                         val ex = result.getException()
@@ -75,9 +80,11 @@ object SDCardAPI {
                             slicerName = "",
                             slicerVersion = "",
                         )
+                        Log.d("SDCardAPI", "SDCardAPI, metadata ERROR!!!!!") // NOT EXECUTED
                         _state.postValue(response)
                     }
                     is Result.Success -> {
+                        //Log.d("SDCardAPI", "SDCardAPI, getFileMetadata") // 1 WORKS
                         val data = result.get().obj()
                         val metaDataObject = data.getJSONObject("result")
                         val response = SDCardFileMetaDataResponse(
@@ -87,6 +94,7 @@ object SDCardAPI {
                             slicerName = metaDataObject.getString("slicer"),
                             slicerVersion = metaDataObject.getString("slicer_version"),
                         )
+                        //Log.d("SDCardAPI", "SDCardAPI, getFileMetadata end: $response") // 1 WORKS
                         _state.postValue(response)
                     }
                 }
@@ -109,7 +117,7 @@ object SDCardAPI {
                     }
                     is Result.Success -> {
                         val data = result.get().obj()
-                        Log.d(TAG, "Response to the POST request: $data")
+                        Log.d(TAG, "SDCardAPI, Response to the POST print request: $data")
                     }
                 }
             }

@@ -2,6 +2,7 @@ package com.example.moonraker_android.ui.sd_card
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,21 +29,27 @@ class SDCardFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_sd_card, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) { // NOT OK
         super.onViewCreated(view, savedInstanceState)
-
+        text_modified.text = " "
+        text_size.text = " "
+        text_slicer.text = " "
+        text_slicer_version.text = " "
+        text_estimated_time.text = " "
         viewModel.state.observe(viewLifecycleOwner, { item ->
+            Log.d("SDCardAPI", "SDCardFragment, file: $item") // 2 TIMES, WORKS
             fileList = arrayListOf() // reset the list when new files are added to the SD card
 
             if (item.size != 0) {
                 for (i in 0 until item.size) {
                     val file = item[i]
+                    Log.d("SDCardAPI", "file: $file")
                     viewModel.addFile(file)
                     fileList.add(file.filename)
+                    viewModel.loadFileDetails(file.filename)
                 }
             }
             setFileInfo(fileList[0])
-
             val fileAdapter = ArrayAdapter(
                 activity as Context,
                 android.R.layout.simple_list_item_1,
@@ -57,6 +64,11 @@ class SDCardFragment : Fragment() {
                     i: Int,
                     l: Long
                 ) {
+                    text_modified.text = " "
+                    text_size.text = " "
+                    text_slicer.text = " "
+                    text_slicer_version.text = " "
+                    text_estimated_time.text = " "
                     val fileIndex = spinner_files.selectedItemPosition
                     setFileInfo(fileList[fileIndex])
                 }
@@ -66,13 +78,28 @@ class SDCardFragment : Fragment() {
                 }
             }
         })
-        viewModel.metaData.observe(viewLifecycleOwner, { item ->
+        viewModel.metaData.observe(viewLifecycleOwner, { item -> // DONT WORK
+            Log.d("SDCardAPI", "SDCardFragment, metadata: $item")
             viewModel.addFileMetadata(item)
-        })
+            val fileName = item.fileName
+            val file = viewModel.getFileByName(fileName)
 
+            val fileIndex = fileList.indexOf(fileName)
+            spinner_files.setSelection(fileIndex)
+
+            text_size.text = file.size
+            text_modified.text = file.modified
+            text_slicer.text = item.slicerName
+            text_slicer_version.text = item.slicerVersion
+            text_estimated_time.text = item.estimatedTime
+        })
         printButton.setOnClickListener {
             startPrint(fileList[spinner_files.selectedItemPosition])
         }
+        // For debugging. Button clears metadata.
+//        deleteButton.setOnClickListener {
+//            viewModel.clearFileMetadata()
+//        }
         updateFilesState()
     }
 
@@ -91,13 +118,20 @@ class SDCardFragment : Fragment() {
     }
 
     private fun setFileInfo(fileName: String) {
+        Log.d("SDCardAPI", "SDCardFragment, setFileInfo start: $fileName")
         val file = viewModel.getFileByName(fileName)
         val fileMetaData = viewModel.getFileMetadataByFileName(fileName)
-        text_modified.text = file.modified
-        text_size.text = file.size
-        text_slicer.text = fileMetaData.slicerName
-        text_slicer_version.text = fileMetaData.slicerVersion
-        text_estimated_time.text = fileMetaData.estimatedTime
+
+        if (fileMetaData != null) {
+            text_modified.text = file.modified
+            text_size.text = file.size
+            Log.d("SDCardAPI", "SDCardFragment, setFileInfo: $fileMetaData")
+            text_slicer.text = fileMetaData.slicerName
+            text_slicer_version.text = fileMetaData.slicerVersion
+            text_estimated_time.text = fileMetaData.estimatedTime
+        } else {
+            viewModel.loadFileDetails(fileName)
+        }
     }
 
     private fun updateFilesState() {
@@ -105,9 +139,6 @@ class SDCardFragment : Fragment() {
             override fun run() {
                 viewModel.loadFiles()
                 fileList = viewModel.getFileNames()
-                for (fileName in fileList) {
-                    viewModel.loadFileDetails(fileName)
-                }
             }
         }
         thread.start()

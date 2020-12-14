@@ -31,11 +31,11 @@
     <string name="estimated_time">Estimated time:</string>
     <string name="slicer">Slicer:</string>
     <string name="slicer_version">Slicer version:</string>
-    <string name="modified_time_placeholder">000000</string>
-    <string name="file_size_placeholder">0 MB</string>
-    <string name="estimated_time_placeholder">0 hour</string>
-    <string name="slicer_name_placeholder">slicer placeholder</string>
-    <string name="slicer_version_placeholder">1.73</string>
+    <string name="modified_time_placeholder"> </string>
+    <string name="file_size_placeholder"> </string>
+    <string name="estimated_time_placeholder"> </string>
+    <string name="slicer_name_placeholder"> </string>
+    <string name="slicer_version_placeholder"> </string>
     <string name="print_file">PRINT</string>
     <string name="negative_100">-100</string>
     <string name="positive_100">+100</string>
@@ -57,4 +57,5 @@
     <string name="notification_title">3D printing in progress</string>
     <string name="remove_notification">Close</string>
     <string name="zero">0</string>
+    <string name="clear_metadata">CLEAR METADATA</string>
 </resources>
