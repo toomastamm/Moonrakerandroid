@@ -59,7 +59,6 @@ class SDCardFragment : Fragment() {
                     i: Int,
                     l: Long
                 ) {
-                    setFileInfo(fileList[spinner_files.selectedItemPosition])
                     val fileIndex = spinner_files.selectedItemPosition
                     setFileInfo(fileList[fileIndex])
                 }
