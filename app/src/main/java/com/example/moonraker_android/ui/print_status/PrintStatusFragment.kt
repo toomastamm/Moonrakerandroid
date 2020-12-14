@@ -1,7 +1,6 @@
 package com.example.moonraker_android.ui.print_status
 
 import android.os.Bundle
-import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +22,7 @@ class PrintStatusFragment : Fragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         viewModel.state.observe(viewLifecycleOwner, { item ->
-            label_host.text = getString(R.string.print_status_connected_to, MoonrakerService.baseUrl)
+            label_host.text = getString(R.string.print_status_connected_to_message, MoonrakerService.baseUrl)
             text_state.text = item.state
             text_file.text = item.filename
             text_message.text = item.message
