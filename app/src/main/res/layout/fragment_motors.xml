@@ -12,10 +12,10 @@
         android:id="@+id/e_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="0.00"
-        android:textSize="24sp"
+        android:layout_marginStart="@dimen/motors_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_default_zero_position_placeholder"
+        android:textSize="@dimen/motors_text_size"
         app:layout_constraintStart_toEndOf="@+id/textView3"
         app:layout_constraintTop_toBottomOf="@+id/z_positive_01" />
 
@@ -23,10 +23,10 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="E:"
-        android:textSize="24sp"
+        android:layout_marginStart="@dimen/motors_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_e_label"
+        android:textSize="@dimen/motors_text_size"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/z_positive_01" />
@@ -35,9 +35,9 @@
         android:id="@+id/z_negative_100"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/negative_100"
+        android:layout_marginStart="@dimen/motors_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_negative_100"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/z_label" />
 
@@ -45,9 +45,9 @@
         android:id="@+id/z_positive_01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/positive_01"
+        android:layout_marginStart="@dimen/motors_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_positive_01"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/z_negative_100" />
 
@@ -55,10 +55,10 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Z:"
-        android:textSize="24sp"
+        android:layout_marginStart="@dimen/motors_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_z_axis_label"
+        android:textSize="@dimen/motors_text_size"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/y_positive_01" />
@@ -67,10 +67,10 @@
         android:id="@+id/z_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="0.00"
-        android:textSize="24sp"
+        android:layout_marginStart="@dimen/motors_narrow_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_default_zero_position_placeholder"
+        android:textSize="@dimen/motors_text_size"
         app:layout_constraintStart_toEndOf="@+id/textView4"
         app:layout_constraintTop_toBottomOf="@+id/y_positive_01" />
 
@@ -78,9 +78,9 @@
         android:id="@+id/z_negative_01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/negative_01"
+        android:layout_marginStart="@dimen/motors_narrow_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_negative_01"
         app:layout_constraintStart_toEndOf="@+id/y_negative_1"
         app:layout_constraintTop_toBottomOf="@+id/z_label" />
 
@@ -88,9 +88,9 @@
         android:id="@+id/y_negative_3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/negative_1"
+        android:layout_marginStart="@dimen/motors_narrow_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_negative_1"
         app:layout_constraintStart_toEndOf="@+id/y_negative_10"
         app:layout_constraintTop_toBottomOf="@+id/z_label" />
 
@@ -98,9 +98,9 @@
         android:id="@+id/z_negative_10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/negative_10"
+        android:layout_marginStart="@dimen/motors_narrow_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_negative_10"
         app:layout_constraintStart_toEndOf="@+id/y_negative_100"
         app:layout_constraintTop_toBottomOf="@+id/z_label" />
 
@@ -108,9 +108,9 @@
         android:id="@+id/z_positive_10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/positive_10"
+        android:layout_marginStart="@dimen/motors_narrow_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_positive_10"
         app:layout_constraintStart_toEndOf="@+id/y_positive_1"
         app:layout_constraintTop_toBottomOf="@+id/y_negative_3" />
 
@@ -118,9 +118,9 @@
         android:id="@+id/z_positive_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/positive_1"
+        android:layout_marginStart="@dimen/motors_narrow_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_positive_1"
         app:layout_constraintStart_toEndOf="@+id/y_positive_01"
         app:layout_constraintTop_toBottomOf="@+id/z_negative_10" />
 
@@ -128,9 +128,9 @@
         android:id="@+id/z_positive_100"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/positive_100"
+        android:layout_marginStart="@dimen/motors_narrow_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_positive_100"
         app:layout_constraintStart_toEndOf="@+id/y_positive_10"
         app:layout_constraintTop_toBottomOf="@+id/z_negative_01" />
 
@@ -138,9 +138,9 @@
         android:id="@+id/y_positive_01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/positive_01"
+        android:layout_marginStart="@dimen/motors_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_positive_01"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/y_negative_100" />
 
@@ -148,9 +148,9 @@
         android:id="@+id/y_negative_100"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/negative_100"
+        android:layout_marginStart="@dimen/motors_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_negative_100"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/y_label" />
 
@@ -158,9 +158,9 @@
         android:id="@+id/y_positive_100"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/positive_100"
+        android:layout_marginStart="@dimen/motors_narrow_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_positive_100"
         app:layout_constraintStart_toEndOf="@+id/y_positive_10"
         app:layout_constraintTop_toBottomOf="@+id/y_negative_01" />
 
@@ -168,10 +168,10 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Y:"
-        android:textSize="24sp"
+        android:layout_marginStart="@dimen/motors_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_y_axis_label"
+        android:textSize="@dimen/motors_text_size"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/x_positive_.1" />
@@ -180,10 +180,10 @@
         android:id="@+id/y_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="0.00"
-        android:textSize="24sp"
+        android:layout_marginStart="@dimen/motors_narrow_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_default_zero_position_placeholder"
+        android:textSize="@dimen/motors_text_size"
         app:layout_constraintStart_toEndOf="@+id/textView4"
         app:layout_constraintTop_toBottomOf="@+id/x_positive_.1" />
 
@@ -191,9 +191,9 @@
         android:id="@+id/y_negative_01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/negative_01"
+        android:layout_marginStart="@dimen/motors_narrow_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_negative_01"
         app:layout_constraintStart_toEndOf="@+id/y_negative_1"
         app:layout_constraintTop_toBottomOf="@+id/y_label" />
 
@@ -201,9 +201,9 @@
         android:id="@+id/y_negative_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/negative_1"
+        android:layout_marginStart="@dimen/motors_narrow_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_negative_1"
         app:layout_constraintStart_toEndOf="@+id/y_negative_10"
         app:layout_constraintTop_toBottomOf="@+id/y_label" />
 
@@ -211,9 +211,9 @@
         android:id="@+id/y_negative_10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/negative_10"
+        android:layout_marginStart="@dimen/motors_narrow_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_negative_10"
         app:layout_constraintStart_toEndOf="@+id/y_negative_100"
         app:layout_constraintTop_toBottomOf="@+id/y_label" />
 
@@ -221,9 +221,9 @@
         android:id="@+id/y_positive_10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/positive_10"
+        android:layout_marginStart="@dimen/motors_narrow_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_positive_10"
         app:layout_constraintStart_toEndOf="@+id/y_positive_1"
         app:layout_constraintTop_toBottomOf="@+id/y_negative_1" />
 
@@ -231,9 +231,9 @@
         android:id="@+id/y_positive_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/positive_1"
+        android:layout_marginStart="@dimen/motors_narrow_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_positive_1"
         app:layout_constraintStart_toEndOf="@+id/y_positive_01"
         app:layout_constraintTop_toBottomOf="@+id/y_negative_10" />
 
@@ -241,9 +241,9 @@
         android:id="@+id/x_negative_100"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/negative_100"
+        android:layout_marginStart="@dimen/motors_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_negative_100"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/x_label" />
 
@@ -251,9 +251,9 @@
         android:id="@+id/x_positive_100"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/positive_100"
+        android:layout_marginStart="@dimen/motors_narrow_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_positive_100"
         app:layout_constraintStart_toEndOf="@+id/x_positive_10"
         app:layout_constraintTop_toBottomOf="@+id/x_negative_01" />
 
@@ -261,10 +261,10 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="X:"
-        android:textSize="24sp"
+        android:layout_marginStart="@dimen/motors_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_x_axis_label"
+        android:textSize="@dimen/motors_text_size"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -273,10 +273,10 @@
         android:id="@+id/x_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="0.00"
-        android:textSize="24sp"
+        android:layout_marginStart="@dimen/motors_narrow_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_default_zero_position_placeholder"
+        android:textSize="@dimen/motors_text_size"
         app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -284,9 +284,9 @@
         android:id="@+id/x_negative_01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/negative_01"
+        android:layout_marginStart="@dimen/motors_narrow_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_negative_01"
         app:layout_constraintStart_toEndOf="@+id/x_negative_1"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -294,9 +294,9 @@
         android:id="@+id/x_negative_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/negative_1"
+        android:layout_marginStart="@dimen/motors_narrow_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_negative_1"
         app:layout_constraintStart_toEndOf="@+id/x_negative_10"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -304,9 +304,9 @@
         android:id="@+id/x_negative_10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/negative_10"
+        android:layout_marginStart="@dimen/motors_narrow_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_negative_10"
         app:layout_constraintStart_toEndOf="@+id/x_negative_100"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -314,9 +314,9 @@
         android:id="@+id/x_positive_10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/positive_10"
+        android:layout_marginStart="@dimen/motors_narrow_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_positive_10"
         app:layout_constraintStart_toEndOf="@+id/x_negative_4"
         app:layout_constraintTop_toBottomOf="@+id/x_negative_1" />
 
@@ -324,9 +324,9 @@
         android:id="@+id/x_negative_4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/positive_1"
+        android:layout_marginStart="@dimen/motors_narrow_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_positive_1"
         app:layout_constraintStart_toEndOf="@+id/x_positive_.1"
         app:layout_constraintTop_toBottomOf="@+id/x_negative_1" />
 
@@ -334,9 +334,9 @@
         android:id="@+id/x_positive_.1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/positive_01"
+        android:layout_marginStart="@dimen/motors_start_margin"
+        android:layout_marginTop="@dimen/motors_top_margin"
+        android:text="@string/motors_positive_01"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/x_negative_10" />
 </androidx.constraintlayout.widget.ConstraintLayout>

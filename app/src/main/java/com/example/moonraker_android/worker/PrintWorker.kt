@@ -51,7 +51,7 @@ class PrintWorker(context: Context, parameters: WorkerParameters) : CoroutineWor
             val status = PrintStatusAPI.getPrintState()
             if (status.state == "printing") {
                 val progress = Utils.secondsToHoursMinutesSeconds(status.total_duration) + " out of " + estimatedTime
-                val title = applicationContext.getString(R.string.notification_title)
+                val title = applicationContext.getString(R.string.print_worker_notification_title)
                 val notification = createNotification(title, progress)
                 NotificationManagerCompat.from(applicationContext).notify(NOTIFICATION_INT_ID, notification)
             } else {
@@ -61,7 +61,7 @@ class PrintWorker(context: Context, parameters: WorkerParameters) : CoroutineWor
     }
 
     private fun createNotification(title: String, progress: String): Notification {
-         val cancel = applicationContext.getString(R.string.remove_notification)
+         val cancel = applicationContext.getString(R.string.print_worker_remove_notification)
         // This PendingIntent can be used to cancel the worker
         val intent = WorkManager.getInstance(applicationContext)
             .createCancelPendingIntent(id)
@@ -84,7 +84,7 @@ class PrintWorker(context: Context, parameters: WorkerParameters) : CoroutineWor
             createChannel()
         }
 
-        val title = applicationContext.getString(R.string.notification_title)
+        val title = applicationContext.getString(R.string.print_worker_notification_title)
         val notification = createNotification(title, progress)
         return ForegroundInfo(NOTIFICATION_INT_ID, notification)
     }
@@ -92,8 +92,8 @@ class PrintWorker(context: Context, parameters: WorkerParameters) : CoroutineWor
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createChannel() {
         // Create the NotificationChannel
-        val name = applicationContext.getString(R.string.channel_name)
-        val descriptionText = applicationContext.getString(R.string.channel_description)
+        val name = applicationContext.getString(R.string.print_worker_channel_name)
+        val descriptionText = applicationContext.getString(R.string.print_worker_channel_description)
         val importance = NotificationManager.IMPORTANCE_LOW
         val mChannel = NotificationChannel(NOTIFICATION_ID, name, importance)
         mChannel.description = descriptionText
