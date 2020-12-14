@@ -24,14 +24,12 @@ class SDCardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-
+        viewModel = ViewModelProvider(this).get(SDCardViewModel::class.java)
         return inflater.inflate(R.layout.fragment_sd_card, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel = ViewModelProvider(this).get(SDCardViewModel::class.java)
 
         viewModel.state.observe(viewLifecycleOwner, { item ->
             fileList = arrayListOf() // reset the list when new files are added to the SD card

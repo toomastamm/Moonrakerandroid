@@ -15,7 +15,7 @@
         android:ems="10"
         android:importantForAutofill="no"
         android:inputType="number"
-        android:text="0"
+        android:text="@string/zero"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_hotend" />
 
@@ -26,7 +26,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/default_temp"
-        android:textSize="24sp"
+        android:paddingTop="5dp"
+        android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/textView9"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,7 +38,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/default_temp"
-        android:textSize="24sp"
+        android:paddingTop="5dp"
+        android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/textView10"
         app:layout_constraintTop_toBottomOf="@+id/hotend_target" />
 
@@ -72,7 +74,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/default_temp"
-        android:textSize="24sp"
+        android:paddingTop="5dp"
+        android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/textView6"
         app:layout_constraintTop_toBottomOf="@+id/hotend_temp" />
 
@@ -107,7 +110,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/default_temp"
-        android:textSize="24sp"
+        android:paddingTop="5dp"
+        android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/textView5"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -120,7 +124,7 @@
         android:ems="10"
         android:importantForAutofill="no"
         android:inputType="number"
-        android:text="0"
+        android:text="@string/zero"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 

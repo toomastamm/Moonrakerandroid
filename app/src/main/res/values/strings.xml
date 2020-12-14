@@ -56,4 +56,5 @@
     <string name="channel_description">Notification about current active print job</string>
     <string name="notification_title">3D printing in progress</string>
     <string name="remove_notification">Close</string>
+    <string name="zero">0</string>
 </resources>
