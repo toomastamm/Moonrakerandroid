@@ -53,7 +53,7 @@ class SDCardFragment : Fragment() {
 
                 override fun onItemSelected(
                     adapterView: AdapterView<*>,
-                    view: View,
+                    view: View?,
                     i: Int,
                     l: Long
                 ) {
